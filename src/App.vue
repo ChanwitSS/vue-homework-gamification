@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Sidebar/>
+    <div class="content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
+<script>
+import Sidebar from './components/Sidebar.vue'
+
+export default {
+  components: { Sidebar }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html {
+  background: #daf0ff
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.top-bar {
+  border-radius: 5px;
+  height: 60px;
 }
+.content {
+  position: absolute;
+  left: 290px;
+  width: 1215px;
+  min-height: 735px;
+}
+
 </style>
