@@ -1,25 +1,23 @@
 <template>
   <div id="app">
-    <Sidebar/>
+    <Sidebar />
     <div class="content">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
-
 <script>
-import Sidebar from './components/Sidebar.vue'
+import Sidebar from "./components/Sidebar.vue";
 
 export default {
-  components: { Sidebar }
-}
+  components: { Sidebar },
+};
 </script>
 
 <style lang="scss">
 html {
-  background: #daf0ff
+  background: #daf0ff;
 }
-
 .top-bar {
   border-radius: 5px;
   height: 60px;
@@ -30,5 +28,4 @@ html {
   width: 1215px;
   min-height: 735px;
 }
-
 </style>
