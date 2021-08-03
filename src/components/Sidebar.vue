@@ -31,7 +31,7 @@
             </el-submenu>
             <el-menu-item index="3" :disabled="isDisabled">
                 <i class="el-icon-document"></i>
-                <span slot="title">กระดานคะแนน</span>
+                <span slot="title"><router-link to="/leaderboard">กระดานคะแนน</router-link></span>
             </el-menu-item>
             <el-menu-item index="4" :disabled="isDisabled">
                 <i class="el-icon-setting"></i>

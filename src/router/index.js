@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Homework from "../views/Homework.vue";
 import Form from "../views/Form.vue";
+import Leaderboard from "@/views/Leaderboard.vue";
 
 Vue.use(VueRouter);
 
@@ -25,7 +26,7 @@ const routes = [
   {
     path: "/leaderboard",
     name: "Leaderboard",
-    component: Login,
+    component: Leaderboard,
   },
   {
     path: "/form",
