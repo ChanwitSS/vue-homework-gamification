@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box-card">
 
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-.box {
+.box-card {
   width: 380px;
   height: 300px;
   display: inline-block;

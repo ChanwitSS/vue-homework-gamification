@@ -4,7 +4,7 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
-let apiUrl = process.env.POKEDEX_ENDPOINT || 'http://localhost:1337'
+let apiUrl = process.env.VUE_APP_API_HOST
 
 export default new Vuex.Store({
   state: {
@@ -46,19 +46,19 @@ export default new Vuex.Store({
           console.error(res)
       }
   },
-  async edit({ commit }, payload) {
-    let body = {
-        id: payload.id,
-        homework_name: payload.homework_name,
-        description: payload.description,
-        point: payload.point,
-        //subject: payload.subject[0].id
+    async edit({ commit }, payload) {
+      let body = {
+          id: payload.id,
+          homework_name: payload.homework_name,
+          description: payload.description,
+          point: payload.point,
+          //subject: payload.subject[0].id
+      }
+      console.log(body)
+      let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
+      console.log(res)
+      commit("edit", payload.index, res.data )
     }
-    console.log(body)
-    let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
-    console.log(res)
-    commit("edit", payload.index, res.data )
-  }
   },
   modules: {
   }
