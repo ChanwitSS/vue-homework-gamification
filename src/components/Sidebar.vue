@@ -18,7 +18,7 @@
                 </template>
                 <el-menu-item-group >
                     <el-menu-item index="2-1">
-                        <router-link to="/homework">สั่งการบ้าน</router-link>
+                        <router-link to="/homeworks">สั่งการบ้าน</router-link>
                     </el-menu-item>
                     <el-menu-item index="2-2">
                         <router-link to="/reward">ตรวจการบ้าน</router-link>
