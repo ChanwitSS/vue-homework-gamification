@@ -10,6 +10,8 @@
         <homework-sent-form></homework-sent-form>
     </div> -->
 
+    <!-- <insert-form></insert-form> -->
+
     <div v-for="(homework, index) in homeworks" v-bind:key="index">
         <Card :homework="homework"/>
     </div>
@@ -21,8 +23,9 @@ import HomeworkStore from '@/store/HomeworkStore'
 import Card from '../components/cards/HomeworkCard.vue'
 import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
+import InsertForm from '../components/forms/InsertForm.vue'
 export default {
-    components: { Card,HomeworkSentForm,HomeworkAssignForm },
+    components: { Card,HomeworkSentForm,HomeworkAssignForm,InsertForm },
     data() {
         return {
             userRole: null,
