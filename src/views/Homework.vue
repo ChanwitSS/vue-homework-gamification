@@ -23,9 +23,9 @@ import HomeworkStore from '@/store/HomeworkStore'
 import Card from '../components/cards/HomeworkCard.vue'
 import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
-import InsertForm from '../components/forms/InsertForm.vue'
+
 export default {
-    components: { Card,HomeworkSentForm,HomeworkAssignForm,InsertForm },
+    components: { Card,HomeworkSentForm,HomeworkAssignForm},
     data() {
         return {
             userRole: null,
