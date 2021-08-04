@@ -9,7 +9,7 @@
                         <i class="el-icon-arrow-down el-icon--right"></i>
                       </el-button>
                         <el-dropdown-menu slot="dropdown">   
-                            <el-dropdown-item v-for="(s, index) in teachers" v-bind:key = "index" @click.native="changeDropdown(s.subject_name)">
+                            <el-dropdown-item v-for="(s, index) in teachers" v-bind:key = "index" @click.native="changeDropdown(s.subject_name,s.id)">
                               {{s.subject_name}}
                               <!-- <select @click="changeDropdown(index)"> </select> -->
                             </el-dropdown-item>
@@ -52,12 +52,15 @@
 import HomeworkStore from "../../store/HomeworkStore"
 import SubjectStore from "../../store/SubjectStore"
 import TeacherStore from "../../store/TeacherStore"
+import AuthUser from "@/store/AuthUser"
 export default {
       data(){
         return{
           teachers: [],
+          stu:[],
           chooseSubject:"เลือกวิชาที่จะสั่ง",
           sub_ID: 0,
+          t: 0,
           check:1,
             form:{
                 homework_name:'',
@@ -73,15 +76,24 @@ export default {
     homework: null
   },
   created() {
-        this.fetch()
+        this.find()
     },
     methods:{
-        async fetch() {
-            await TeacherStore.dispatch("fetch")
-            this.teachers = TeacherStore.getters.teachers
-            this.teachers = this.teachers[0].subjects
+        async find() {
+          console.log("Auth");
+          console.log(AuthUser.getters.user);
+          this.t = AuthUser.getters.user.teacher.id
+          console.log("id");
+          console.log(this.t);
+          await TeacherStore.dispatch("find",this.t)
+
+          this.teachers = TeacherStore.getters.teachers
+          this.teachers = this.teachers.subjects;
+          console.log(this.teachers);
+          // this.teachers = this.teachers[0].subjects
             // console.log(this.teachers[0].subjects);
             // console.log(this.teachers[0].subjects[0].subject_name);
+
 
         },
 
@@ -94,6 +106,7 @@ export default {
             }
             this.check=1
             this.chooseSubject = "เลือกวิชาที่จะสั่ง"
+            this.sub_ID = 0
         },
         add(){
           let keep
@@ -106,18 +119,30 @@ export default {
           else{
             keep = this.form.day+"T"+this.form.time+":00.000Z"
           }
+
+            for (let index = 0; index < this.teachers.length; index++) {
+            console.log("id :"+this.teachers[index].id);
+            this.stu.push(this.teachers[index].id)
+            console.log(this.stu);
+          }
+
+          console.log("stu");
+          console.log(this.stu);
+
           let payload = {
               homework_name: this.form.homework_name,
               description: this.form.description,
               point: this.form.point,
               due_date: keep,
               subjects: this.chooseSubject,
-              // subject_ID:
+              subject_ID: this.sub_ID,
+              teacher_ID: this.t,
+              student_ID:this.stu
           }
           HomeworkStore.dispatch("add",payload)
 
             //send data to Store
-          console.log("here");
+          // console.log("here");
           console.log(payload)//use "form" -> not display => change to "div"
           this.clearForm()
         },
@@ -126,9 +151,10 @@ export default {
           console.log(this.form.day);
           console.log(this.form.time);
         },
-        changeDropdown(sub){
+        changeDropdown(sub,id){
           this.chooseSubject = sub
           console.log(this.chooseSubject);
+          this.sub_ID = id
         }
         
     }

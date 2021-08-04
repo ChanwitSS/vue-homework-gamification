@@ -18,6 +18,10 @@ export default new Vuex.Store({
       console.log(res)
       state.data = res.data
     },
+    find(state, res) {
+      console.log(res)
+      state.data = res.data
+    },
     add(state, res) {
       console.log(res)
       state.data.push(res.data)
@@ -29,6 +33,13 @@ export default new Vuex.Store({
       let res = await Axios.get(apiUrl + '/teachers')
       console.log(res)
       commit("fetch", res)
+    },
+    async find({ commit },id) {
+      // console.log("here");
+      console.log(apiUrl + '/teachers/'+id);
+      let res = await Axios.get(apiUrl + '/teachers/'+id)
+      console.log(res)
+      commit("find", res)
     },
     async add({ commit }, payload) {
       let body = {

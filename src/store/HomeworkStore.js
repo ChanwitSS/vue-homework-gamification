@@ -41,8 +41,15 @@ export default new Vuex.Store({
         subjects: 
           [{
             subject_name: payload.subjects,
-            id: 1
-          }]
+            id: payload.subject_ID,
+          }],
+        teachers:
+          [{
+            id: payload.teacher_ID
+          }],  
+        students:[{
+            id:payload.student_ID
+        }]
 
     }
       console.log(body)
