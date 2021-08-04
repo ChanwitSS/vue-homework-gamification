@@ -17,15 +17,10 @@
                     <span slot="title">อาจารย์</span>
                 </template>
                 <el-menu-item-group >
-                    <el-menu-item index="2-1">
-                        <router-link to="/homework">สั่งการบ้าน</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="2-2">
-                        <router-link to="/reward">ตรวจการบ้าน</router-link>
-                    </el-menu-item>
+                    <el-menu-item index="2-1" @click="changeRounter('homework')">การบ้าน</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="3" :disabled="isDisabled">
+            <el-menu-item index="3" :disabled="isDisabled" @click="changeRounter('leaderboard')">
                 <i class="el-icon-document"></i>
                 <span slot="title">กระดานคะแนน</span>
             </el-menu-item>
@@ -33,16 +28,16 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">ตั้งค่า</span>
             </el-menu-item>
-            <el-submenu index="4">
+            <el-submenu index="5">
                 <template slot="title">
                     <i class="el-icon-user"></i>
                     <span slot="title">บัญชี</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="4-1">
+                    <el-menu-item index="5-1">
                         <router-link to="/info">ข้อมูล</router-link>
                     </el-menu-item>
-                    <el-menu-item index="4-2" @click="logout">ออกจากระบบ</el-menu-item>
+                    <el-menu-item index="5-2" @click="logout">ออกจากระบบ</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
