@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-        <span>Subject: {{ homework.subject.subject_id }}</span>
+        <span>Subject: {{ homework.subject[0].subject_name }}</span>
         <el-popover placement="right" width="400" trigger="click">
           <Form>
           </Form>

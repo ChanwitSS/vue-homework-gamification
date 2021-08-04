@@ -1,5 +1,15 @@
 <template>
   <div>
+    <el-popover placement="right" width="400" trigger="click">
+        <HomeworkAssignForm>
+        </HomeworkAssignForm>
+        <el-button slot="reference" type="primary" icon="el-icon-circle-plus" round>สั่งการบ้าน</el-button>
+    </el-popover>
+
+    <!-- <div>
+        <homework-sent-form></homework-sent-form>
+    </div> -->
+
     <div v-for="(homework, index) in homeworks" v-bind:key="index">
         <Card :homework="homework"/>
     </div>
@@ -9,8 +19,10 @@
 <script>
 import HomeworkStore from '@/store/HomeworkStore'
 import Card from '../components/cards/HomeworkCard.vue'
+import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
+import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 export default {
-    components: { Card },
+    components: { Card,HomeworkSentForm,HomeworkAssignForm },
     data() {
         return {
             userRole: null,
