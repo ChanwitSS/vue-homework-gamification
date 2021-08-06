@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import AuthService from '@/services/auth.js'
+import Axios from 'axios'
 
 Vue.use(Vuex)
 
+let apiUrl = process.env.VUE_APP_API_HOST
 let auth = JSON.parse(localStorage.getItem('auth_key'))
 
 const initailState = {
@@ -29,7 +31,7 @@ export default new Vuex.Store({
         state.user = null,
         state.jwt = null,
         state.isAuthen = false
-    }
+    },
   },
   actions: {
       async login({ commit }, payload) {
@@ -43,8 +45,11 @@ export default new Vuex.Store({
         let res = await AuthService.logout()
         commit('logoutSuccess')
         return res;
+      },
+      async register({ commit }, payload) {
+        let res = await Axios.post(apiUrl + '/auth/local/register', payload)
+        //commit('register', payload)
       }
-
   },
   modules: {
   }

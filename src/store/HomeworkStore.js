@@ -4,7 +4,7 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
-let apiUrl = process.env.POKEDEX_ENDPOINT || 'http://localhost:1337'
+let apiUrl = process.env.VUE_APP_API_HOST
 
 export default new Vuex.Store({
   state: {
@@ -15,24 +15,18 @@ export default new Vuex.Store({
   },
   mutations: {
     fetch(state, res) {
-      console.log(res)
       state.data = res.data
     },
     add(state, res) {
-      console.log(res)
       state.data.push(res.data)
     }
   },
   actions: {
     async fetch({ commit }) {
-      console.log("here");
       let res = await Axios.get(apiUrl + '/homeworks')
-      console.log(res)
       commit("fetch", res)
     },
     async add({ commit }, payload) {
-      console.log("add");
-      console.log(payload);
       let body = {
         homework_name: payload.homework_name,
         description: payload.description,
@@ -52,9 +46,7 @@ export default new Vuex.Store({
         }]
 
     }
-      console.log(body)
       let res = await Axios.post(apiUrl + '/homeworks', body)
-      console.log(res)
       if (res.status === 200) {
           commit("add", res)
       } else {
@@ -69,9 +61,7 @@ export default new Vuex.Store({
         point: payload.point,
         //subject: payload.subject[0].id
     }
-    console.log(body)
     let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
-    console.log(res)
     commit("edit", payload.index, res.data )
   }
   },

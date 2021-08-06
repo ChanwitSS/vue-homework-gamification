@@ -3,9 +3,10 @@
     <el-card class="box-card2" style="background: linear-gradient(to right, #409EFF 0%, #409EFF 35%, #FFFFFF 35%, #FFFFFF 100%);">
       <img src="../assets/homework.png" class="logo"/>
       <div id="welcome">
-        <p>ยินดีต้อนรับสู่โลกที่จะทำให้คุณสนุกกับการบ้าน</p>
+        <h1>ยินดีต้อนรับสู่โลกที่จะทำให้คุณสนุกกับการบ้าน</h1>
       </div>
       <div id="login-form">
+        <h2 class="text-1">เข้าสู่ระบบ</h2>
         <div style="margin-top: 15px;">
           <span class="username">Username or Email</span>
           <el-input placeholder="Username" v-model="form.username" style="margin-top: 10px;"/>
@@ -50,12 +51,12 @@ export default {
       let res = await AuthUser.dispatch("login", payload)
       if (res.success) {
           await this.$message({
-            message: 'Congrats, Login Success',
+            message: 'เข้าสู่ระบบสำเร็จ',
             type: 'success'
           });
           this.$router.push("/home")
       } else {
-          this.$message.error('Oops, Username or Password Incorrect');
+          this.$message.error('ชื่อผู้เข้าใช้หรือรหัสผ่านไม่ถูกต้อง');
       }
     },
 
@@ -111,5 +112,11 @@ export default {
 #welcome {
   position: fixed;
   margin-top: 300px;
+}
+.text-1 {
+  position: fixed;
+  top: 80px;
+  right: 180px;
+  font-size: 40px;
 }
 </style>

@@ -1,10 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Homework from "../views/Homework.vue";
+import CreateHomework from "../views/CreateHomework.vue";
+import HomeworkList from "../views/HomeworkList.vue";
 import Leaderboard from "../views/Leaderboard.vue";
-import Form from "../views/Form.vue";
-import Home from "../views/Home.vue";
+import ManageRewards from "../views/ManageRewards.vue";
+import ManageUsers from "../views/ManageUsers.vue";
+//import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import RedeemRewards from "../views/RedeemRewards.vue";
+
+
+
 
 
 Vue.use(VueRouter);
@@ -16,25 +22,40 @@ const routes = [
     component: Login
   },
   {
+    path: "/homework/create",
+    name: "CreateHomework",
+    component: CreateHomework,
+  },
+  {
     path: "/homeworks",
-    name: "Homework",
-    component: Homework,
+    name: "HomeworkList",
+    component: HomeworkList,
   },
   {
     path: "/leaderboard",
     name: "Leaderboard",
     component: Leaderboard,
   },
-  {
-    path: "/form",
-    name: "Form",
-    component: Form,
-  },
-  {
+  /*{
     path: "/home",
     name: "Home",
     component: Home,
+  },*/
+  {
+    path: "/users/manage",
+    name: "ManageUsers",
+    component: ManageUsers
   },
+  {
+    path: "/rewards/manage",
+    name: "ManageReward",
+    component: ManageRewards
+  },
+  {
+    path: "/rewards/redeem",
+    name: "RedeemReward",
+    component: RedeemRewards
+  }
 ];
 
 const router = new VueRouter({

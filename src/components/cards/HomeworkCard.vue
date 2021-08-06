@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-        <span>Subject: {{ homework.subject[0].subject_name }}</span>
+        <span>Subject: {{ homework.homework_name }}</span>
         <el-popover placement="right" width="400" trigger="click">
           <Form>
           </Form>
@@ -51,7 +51,9 @@ export default {
   }
 
   .box-card {
+    position: relative;
     width: 380px;
+    height: 300px;
     display: inline-block;
     margin: 10px;
   }
