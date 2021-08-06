@@ -1,16 +1,9 @@
 <template>
     <div class="bar">
+        <div class="header">
+            <h1 class="title">Homework</h1>
+        </div>
         <el-menu default-active="2" class="el-menu-vertical-demo" :popper-append-to-body="false">
-            <el-submenu index="1" v-if="userRole == 'Student'" style="top: 60px">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">นักเรียน</span>
-                </template>
-                <el-menu-item index="1" @click="changeRounter('homeworks')">การบ้าน</el-menu-item>
-                <el-menu-item index="1" @click="changeRounter('reward')">คะแนน - ประวัติการแลกรางวัล</el-menu-item>
-            </el-submenu>
-
-            
             <el-menu-item index="1" @click="changeRounter('homeworks')" v-if="userRole == 'Student'" :disabled="isDisabled">
                 <i class="el-icon-document"></i>
                 <span slot="title">การบ้าน</span>
@@ -30,34 +23,34 @@
             </el-menu-item>
 
 
-            <el-menu-item index="1" :disabled="isDisabled" @click="changeRounter('leaderboard')">
+            <el-menu-item index="4" :disabled="isDisabled" @click="changeRounter('leaderboard')">
                 <i class="el-icon-medal-1"></i>
                 <span slot="title">กระดานคะแนน</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="changeRounter('rewards/manage')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+            <el-menu-item index="5" @click="changeRounter('rewards/manage')" v-if="userRole == 'Admin'" :disabled="isDisabled">
                 <i class="el-icon-setting"></i>
                 <span slot="title">จัดการรางวัล</span>
             </el-menu-item>
-            <el-menu-item index="3" @click="changeRounter('users/manage')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+            <el-menu-item index="6" @click="changeRounter('users/manage')" v-if="userRole == 'Admin'" :disabled="isDisabled">
                 <i class="el-icon-setting"></i>
                 <span slot="title">จัดการผู้ใช้งาน</span>
             </el-menu-item>
-            <el-menu-item index="4" @click="changeRounter('users/create')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+            <el-menu-item index="7" @click="changeRounter('users/create')" v-if="userRole == 'Admin'" :disabled="isDisabled">
                 <i class="el-icon-setting"></i>
                 <span slot="title">เพิ่มผู้ใช้งาน</span>
             </el-menu-item>
             
-            <el-submenu index="5">
+            <el-submenu index="8">
                 <template slot="title">
                     <i class="el-icon-user"></i>
                     <span slot="title">บัญชี</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="5-1" @click="changeRounter('info')">
+                    <el-menu-item index="8-1" @click="changeRounter('info')">
                         <i class="el-icon-document-copy"></i>
                         <span slot="title">ข้อมูล</span>
                     </el-menu-item>
-                    <el-menu-item index="5-2" @click="logout">
+                    <el-menu-item index="8-2" @click="logout">
                         <i class="el-icon-switch-button"></i>
                         <span slot="title">ออกจากระบบ</span>
                     </el-menu-item>
@@ -123,10 +116,23 @@ export default {
     z-index: 1;
     position: fixed;
     bottom: 0;
-    top: 60px;
+    top: 0;
     left: 0;
     background: white;
     width: 275px;
     height: 100%;
+}
+
+.title {
+  top: 15px;
+  left: 30px;
+  font-size: 30px;
+  border-color: white;
+}
+
+.header {
+    margin-top: 10%;
+    margin-left: 20%;
+    margin-bottom: 10%;
 }
 </style>

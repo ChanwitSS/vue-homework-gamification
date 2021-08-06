@@ -9,6 +9,10 @@ import ManageUsers from "../views/ManageUsers.vue";
 import Login from "../views/Login.vue";
 import RedeemRewards from "../views/RedeemRewards.vue";
 
+
+
+
+
 Vue.use(VueRouter);
 
 const routes = [

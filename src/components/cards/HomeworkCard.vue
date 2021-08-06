@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-        <span>Subject: {{ homework.homework_name }}</span>
+        <span>วิชา: {{ homework.homework_name }}</span>
         <el-popover placement="right" width="400" trigger="click">
           <Form>
           </Form>
@@ -9,9 +9,9 @@
         </el-popover>
     </div>
     <div class="text item">
-      <p>Name: {{ homework.homework_name }}</p>
-      <p>Description: {{ homework.description }}</p>
-      <p>Due Date: {{ homework.due_date }}</p>
+      <p>ชื่อการบ้าน: {{ homework.homework_name }}</p>
+      <p>คำอธิบาย: {{ homework.description }}</p>
+      <p>กำหนดส่ง: {{ homework.due_date.substring(0,10) }} {{ homework.due_date.substring(11,16) }}</p>
     </div>
   </el-card>
 </template>

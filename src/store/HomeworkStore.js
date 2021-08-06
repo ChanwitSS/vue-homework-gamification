@@ -53,17 +53,17 @@ export default new Vuex.Store({
           console.error(res)
       }
   },
-  async edit({ commit }, payload) {
-    let body = {
-        id: payload.id,
-        homework_name: payload.homework_name,
-        description: payload.description,
-        point: payload.point,
-        //subject: payload.subject[0].id
+    async edit({ commit }, payload) {
+      let body = {
+          id: payload.id,
+          homework_name: payload.homework_name,
+          description: payload.description,
+          point: payload.point,
+          //subject: payload.subject[0].id
+      }
+      let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
+      commit("edit", payload.index, res.data )
     }
-    let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
-    commit("edit", payload.index, res.data )
-  }
   },
   modules: {
   }

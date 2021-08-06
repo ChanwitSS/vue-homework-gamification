@@ -19,7 +19,6 @@
             <Card :homework="homework"/>
         </div>
     </div>
-
   </div>
 </template>
 
@@ -30,6 +29,7 @@ import Card from '../components/cards/HomeworkCard.vue'
 import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
+
 export default {
     components: { Card,HomeworkSentForm,HomeworkAssignForm },
     data() {

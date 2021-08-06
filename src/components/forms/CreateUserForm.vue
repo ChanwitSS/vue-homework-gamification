@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="success" style="margin:20px 20px 50px 1100px; right:20;" @click="onClickSave">บันทึก</el-button>
-    <el-form :label-position="labelPosition" label-width="100px" >
+    <el-form label-width="100px" >
         <el-form-item label="ชื่อ" >
             <el-input v-model="form.first_name"></el-input>
         </el-form-item>

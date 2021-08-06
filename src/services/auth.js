@@ -4,8 +4,6 @@ let auth = JSON.parse(localStorage.getItem('auth_key'))
 const user = auth ? auth.user: null
 const jwt = auth ? auth.jwt: null
 
-
-
 const apiUrl = process.env.VUE_APP_API_HOST
 
 export default {

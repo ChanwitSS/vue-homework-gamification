@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import Axios from "axios";
 
 Vue.use(Vuex);
-let apiUrl = process.env.POKEDEX_ENDPOINT || "http://localhost:1337";
 
 let apiUrl = process.env.VUE_APP_API_HOST
 

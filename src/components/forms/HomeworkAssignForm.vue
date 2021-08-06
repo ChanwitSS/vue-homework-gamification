@@ -20,9 +20,10 @@
             <tr>
                 <td><label for="homework_name">ชื่อการบ้าน :</label></td>
                 <td><input type="text" v-model="form.homework_name"></td>
+                <el-input placeholder="Please input" v-model="input"></el-input>
             </tr>
             <tr>
-                <td><label for="description">Description :</label></td>
+                <td><label for="description">คำอธิบาย :</label></td>
                 <td><input type="text" v-model="form.description"></td>
             </tr>
             <tr>
