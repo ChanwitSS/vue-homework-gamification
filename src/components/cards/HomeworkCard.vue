@@ -1,9 +1,8 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-        <!-- <span>Subject: {{ homework.subject[0].subject_name }}</span> -->
-        <span>Subject: {{}}</span>
-        <el-popover placement="right" width="400" trigger="click" v-if="checkRole()">
+        <span>วิชา: {{ homework.homework_name }}</span>
+        <el-popover placement="right" width="400" trigger="click">
           <Form>
           </Form>
             <el-button style="float: right; padding: 3px 0" slot="reference" type="text" >ส่งงาน</el-button>
@@ -11,86 +10,50 @@
 
     </div>
     <div class="text item">
-        <p>Name: {{ homework.homework_name }}</p>
-        <p>Description: {{ homework.description }}</p>
-        <p>Due Date: {{ homework.due_date }}</p>
+      <p>ชื่อการบ้าน: {{ homework.homework_name }}</p>
+      <p>คำอธิบาย: {{ homework.description }}</p>
+      <p>กำหนดส่ง: {{ homework.due_date.substring(0,10) }} {{ homework.due_date.substring(11,16) }}</p>
     </div>
-    
   </el-card>
 </template>
 
 <script>
-import Form from '../forms/HomeworkSentForm.vue'
-import AuthUser from "@/store/AuthUser"
+import Form from "../forms/HomeworkSentForm.vue";
 export default {
-  components: { Form, },
+  components: { Form },
   data() {
     return {
       homework_name: null,
-      who:"",
-      tcheck:"teacher"
-    }
+    };
   },
   props: {
-    homework: null
-  },  
-  created() {
-    this.find()
+    homework: null,
   },
-    methods:{
-        async find() {
-          console.log("Auth");
-          console.log(AuthUser.getters.user.role.type);
-          this.who = AuthUser.getters.user
-          console.log("id");
-          console.log(this.who);
-
-          // if (this.who === teacher) {
-            
-          // }
-
-          // await TeacherStore.dispatch("find",this.who)
-
-          // this.teachers = TeacherStore.getters.teachers
-          // this.teachers = this.teachers.subjects;
-          // console.log(this.teachers);
-
-
-
-        },
-        checkRole(){
-          if (this.who.role.type === "teacher") {
-            console.log("yes");
-            return true;
-          }
-          console.log("no");
-          return false
-        }
-
-  }
-}
+};
 </script>
 
 <style>
-  .text {
-    font-size: 14px;
-  }
+.text {
+  font-size: 14px;
+}
 
-  .item {
-    margin-bottom: 18px;
-  }
+.item {
+  margin-bottom: 18px;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
 
   .box-card {
+    position: relative;
     width: 380px;
+    height: 300px;
     display: inline-block;
     margin: 10px;
   }

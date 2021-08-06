@@ -1,12 +1,18 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Homework from "../views/Homework.vue";
+import CreateHomework from "../views/CreateHomework.vue";
+import HomeworkList from "../views/HomeworkList.vue";
 import Leaderboard from "../views/Leaderboard.vue";
-import Form from "../views/Form.vue";
-import Home from "../views/Home.vue";
+import ManageRewards from "../views/ManageRewards.vue";
+import ManageUsers from "../views/ManageUsers.vue";
+//import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Reward from "../views/Reward.vue"
+
 import RewardHistory from "../views/RewardHis"
+import RedeemRewards from "../views/RedeemRewards.vue";
+
+
+
 
 
 Vue.use(VueRouter);
@@ -18,9 +24,14 @@ const routes = [
     component: Login
   },
   {
+    path: "/homework/create",
+    name: "CreateHomework",
+    component: CreateHomework,
+  },
+  {
     path: "/homeworks",
-    name: "Homework",
-    component: Homework,
+    name: "HomeworkList",
+    component: HomeworkList,
   },
   {
     path: "/leaderboard",
@@ -33,20 +44,31 @@ const routes = [
     component: Form,
   },
   {
-    path: "/rewards",
-    name: "Reward",
-    component: Reward,
-  },
-  {
     path: "/rewardsHistory",
     name: "RewardsHistory",
     component: RewardHistory,
   },
-  {
+  
+  /*{
     path: "/home",
     name: "Home",
     component: Home,
+  },*/
+  {
+    path: "/users/manage",
+    name: "ManageUsers",
+    component: ManageUsers
   },
+  {
+    path: "/rewards/manage",
+    name: "ManageReward",
+    component: ManageRewards
+  },
+  {
+    path: "/rewards/redeem",
+    name: "RedeemReward",
+    component: RedeemRewards
+  }
 ];
 
 const router = new VueRouter({

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <Login v-if="!isAuthen"/> -->
     <div id="main-app" >
       <Sidebar v-if='this.$route.path != "/"'/>
       <div class="content">
@@ -13,9 +12,8 @@
 import Sidebar from "./components/Sidebar.vue";
 import Login from "./views/Login.vue"
 import AuthUser from "./store/AuthUser"
-
 export default {
-  components: { Sidebar, Login },
+  components: { Sidebar, Login},
   data() {
     return {
       isAuthen: AuthUser.getters.user,
@@ -32,7 +30,8 @@ html {
   background: #daf0ff;
 }
 .content {
-  position: absolute;
+  position: fixed;
+  top: 20px;
   left: 290px;
   width: 1215px;
   min-height: 735px;
