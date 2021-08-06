@@ -43,7 +43,21 @@ export default new Vuex.Store({
         let res = await AuthService.logout()
         commit('logoutSuccess')
         return res;
-      }
+      },
+      async edit({ commit }, payload) {
+        let body = {
+          id: payload.id,
+          reward_name: payload.reward_name,
+          reward_point: payload.reward_point,
+          reward_remain: payload.reward_remain,
+          users: payload.users
+            //subject: payload.subject[0].id
+        }
+        console.log(body)
+        let res = await Axios.put(apiUrl + '/rewards/' + payload.id, body)
+        console.log(res)
+        commit("edit", payload.index, res.data )
+      },
 
   },
   modules: {

@@ -8,7 +8,7 @@
                 </template>
                 <el-menu-item-group>
                     <el-menu-item index="1-1" @click="changeRounter('homework')">การบ้าน</el-menu-item>
-                    <el-menu-item index="1-2" @click="changeRounter('reward')">คะแนน - ประวัติการแลกรางวัล</el-menu-item>
+                    <el-menu-item index="1-2" @click="changeRounter('rewards')">คะแนน - ประวัติการแลกรางวัล</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2" :disabled="isDisabled">
@@ -21,7 +21,7 @@
                         <router-link to="/homeworks">สั่งการบ้าน</router-link>
                     </el-menu-item>
                     <el-menu-item index="2-2">
-                        <router-link to="/reward">ตรวจการบ้าน</router-link>
+                        <router-link to="/rewards">ตรวจการบ้าน</router-link>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
