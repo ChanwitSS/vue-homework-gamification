@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import Homework from "../views/Homework.vue";
 import Form from "../views/Form.vue";
 import Leaderboard from "@/views/Leaderboard.vue";
-
+import adminLeaderboard from "@/views/adminLeaderboard";
 Vue.use(VueRouter);
 
 const routes = [
@@ -27,6 +27,11 @@ const routes = [
     path: "/leaderboard",
     name: "Leaderboard",
     component: Leaderboard,
+  },
+  {
+    path: "/adminLeaderboard",
+    name: "AdminLeaderboard",
+    component: adminLeaderboard,
   },
   {
     path: "/form",

@@ -22,7 +22,7 @@ export default new Vuex.Store({
   },
   actions: {
     async fetch({ commit }) {
-      let res = await Axios.get(apiUrl + "/students");
+      let res = await Axios.get(apiUrl + "/users");
       commit("fetch",res)
     },
     async add({commit},payload){
@@ -31,7 +31,7 @@ export default new Vuex.Store({
         point: payload.total_point,
         user: payload.user
       }
-      let res = await Axiost.post(apiUrl + '/students',body)
+      let res = await Axiost.post(apiUrl + '/users',body)
       if(res.status === 200){
         commit("add",res)
       }
