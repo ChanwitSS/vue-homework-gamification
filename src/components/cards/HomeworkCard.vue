@@ -9,46 +9,45 @@
         </el-popover>
     </div>
     <div class="text item">
-        <p>Name: {{ homework.homework_name }}</p>
-        <p>Description: {{ homework.description }}</p>
-        <p>Due Date: {{ homework.due_date }}</p>
+      <p>Name: {{ homework.homework_name }}</p>
+      <p>Description: {{ homework.description }}</p>
+      <p>Due Date: {{ homework.due_date }}</p>
     </div>
-    
   </el-card>
 </template>
 
 <script>
-import Form from '../forms/HomeworkSentForm.vue'
+import Form from "../forms/HomeworkSentForm.vue";
 export default {
-  components: { Form, },
+  components: { Form },
   data() {
     return {
       homework_name: null,
-    }
+    };
   },
   props: {
-    homework: null
-  }
-}
+    homework: null,
+  },
+};
 </script>
 
 <style>
-  .text {
-    font-size: 14px;
-  }
+.text {
+  font-size: 14px;
+}
 
-  .item {
-    margin-bottom: 18px;
-  }
+.item {
+  margin-bottom: 18px;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
 
   .box-card {
     position: relative;
