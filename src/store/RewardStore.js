@@ -66,6 +66,9 @@ export default new Vuex.Store({
     async delete({ commit }, payload) {
       let res = await Axios.delete(apiUrl + "/rewards/" + payload.id);
     },
+    async add({ commit }, payload) {
+      let res = await Axios.post(apiUrl + "/rewards/", payload);
+    },
   },
   modules: {},
 });
