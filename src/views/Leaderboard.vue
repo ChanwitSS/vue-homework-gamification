@@ -1,13 +1,19 @@
 <template>
   <div>
-      <boardTable></boardTable>
+    <BoardTable/>
   </div>
 </template>
 
 <script>
-import boardTable from "@/components/board/boardTable.vue";
+import BoardTable from "@/components/board/boardTable.vue";
+import Session from "@/components/Session.vue";
 export default {
-  components: { boardTable },
+  components: { BoardTable, Session },
+  data() {
+    return {
+      
+    }
+  }
 };
 </script>
 

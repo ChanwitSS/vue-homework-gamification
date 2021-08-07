@@ -1,7 +1,5 @@
 <template>
-  <el-container class="head">
-    <h1 >Header</h1>
-  </el-container>
+  <h1>hee</h1>
 </template>
 
 <script>
@@ -11,4 +9,5 @@ export default {
 </script>
 
 <style>
+
 </style>

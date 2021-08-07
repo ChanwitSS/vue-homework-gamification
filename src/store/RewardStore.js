@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
-import { add } from "lodash";
 Vue.use(Vuex);
-let apiUrl = process.env.POKEDEX_ENDPOINT || "http://localhost:1337";
+
+let apiUrl = process.env.VUE_APP_API_HOST;
+
 export default new Vuex.Store({
   state: {
     data: [],
@@ -18,6 +19,16 @@ export default new Vuex.Store({
     add(state, res) {
       state.data.push(res.data);
     },
+    editR(state, data) {
+      // for (let i = 0; i < state.data.length; i++) {
+      //   if (state.data[i].id === res.data.id) {
+      //     state.data[i] = res.data;
+      //   }
+      // }
+      // console.log(state.data);
+      console.log(data.res.data);
+      state.data[data.index] = data.res.data;
+    },
   },
   actions: {
     async fetch({ commit }) {
@@ -29,8 +40,6 @@ export default new Vuex.Store({
         id: payload.id,
         reward_name: payload.reward_name,
         reward_remain: payload.reward_remain,
-        created_at: payload.created_at,
-        updated_at: payload.updated_at,
       };
       let res = await Axiost.post(apiUrl + "/rewards", body);
       if (res.status === 200) {
@@ -38,6 +47,24 @@ export default new Vuex.Store({
       } else {
         console.error(res);
       }
+    },
+    async editReward({ commit }, payload) {
+      let body = {
+        id: payload.id,
+        reward_name: payload.reward_name,
+        reward_remain: payload.reward_remain,
+        users: payload.users,
+        reward_point: payload.reward_point,
+      };
+      console.log(body);
+      let res = await Axios.put(apiUrl + "/rewards/" + payload.id, body);
+      let index = payload.index;
+      console.log(res.data);
+      console.log(payload.index);
+      commit("editR", { res, index });
+    },
+    async delete({ commit }, payload) {
+      let res = await Axios.delete(apiUrl + "/rewards/" + payload.id);
     },
   },
   modules: {},
