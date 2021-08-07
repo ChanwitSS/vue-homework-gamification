@@ -19,7 +19,11 @@ export default new Vuex.Store({
     },
     add(state, res) {
       state.data.push(res.data)
-    }
+    },
+    find(state, res) {
+      console.log(res)
+      state.data = res.data
+    },
   },
   actions: {
     async fetch({ commit }) {
@@ -52,6 +56,13 @@ export default new Vuex.Store({
       } else {
           console.error(res)
       }
+  },
+  async find({ commit },id) {
+    // console.log("here");
+    console.log(apiUrl + '/homeworks/'+id);
+    let res = await Axios.get(apiUrl + '/homeworks/'+id)
+    console.log(res)
+    commit("find", res)
   },
     async edit({ commit }, payload) {
       let body = {

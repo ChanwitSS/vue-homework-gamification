@@ -2,10 +2,17 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
         <span>วิชา: {{ homework.homework_name }}</span>
-        <el-popover placement="right" width="400" trigger="click">
-          <Form>
-          </Form>
-            <el-button style="float: right; padding: 3px 0" slot="reference" type="text" >ส่งงาน</el-button>
+        <el-popover placement="bottom" width="400" trigger="click" v-if="role=='Student'">
+          <SentForm v-if="role=='Student'"/>
+          <!-- <CheckHomeworkForm :homework="homework" v-if="role=='Teacher'"/> -->
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button>
+          <!-- <el-button style="float: right; padding: 3px 0" slot="reference" type="text"  v-if="role=='Teacher'">ตรวจงาน</el-button> -->
+        </el-popover>
+        <el-popover placement="bottom" width="600" trigger="click" v-if="role=='Teacher'">
+          <!-- <SentForm v-if="role=='Student'"/> -->
+          <CheckHomeworkForm :homework="homework" v-if="role=='Teacher'"/>
+          <!-- <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button> -->
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text"  v-if="role=='Teacher'">ตรวจงาน</el-button>
         </el-popover>
 
     </div>
@@ -18,9 +25,10 @@
 </template>
 
 <script>
-import Form from "../forms/HomeworkSentForm.vue";
+import SentForm from "../forms/HomeworkSentForm.vue";
+import CheckHomeworkForm from "../forms/CheckHomeworkForm.vue"
 export default {
-  components: { Form },
+  components: { SentForm,CheckHomeworkForm },
   data() {
     return {
       homework_name: null,
@@ -28,6 +36,7 @@ export default {
   },
   props: {
     homework: null,
+    role: null,
   },
 };
 </script>
@@ -55,6 +64,6 @@ export default {
     width: 380px;
     height: 300px;
     display: inline-block;
-    margin: 10px;
+    margin: 20px;
   }
 </style>
