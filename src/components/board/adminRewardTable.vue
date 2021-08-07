@@ -17,9 +17,9 @@
       </el-table-column>
       <el-table-column label="เหลือรางวัล" prop="reward_remain" width="120">
       </el-table-column>
-      <el-table-column label="วันที่สร้าง" prop="created_at" width="120">
+      <el-table-column label="วันที่สร้าง" prop="created_at" width="130">
       </el-table-column>
-      <el-table-column label="วันที่แก้ไข" prop="updated_at" width="120">
+      <el-table-column label="วันที่แก้ไข" prop="updated_at" width="126">
       </el-table-column>
 
       <el-table-column align="right" width="360">
@@ -63,10 +63,24 @@ export default {
   created() {
     this.fetch();
   },
+  async mounted() {
+    await EventBus.$on("trans-data", (data) => {
+      this.fetch();
+    });
+  },
   methods: {
     async fetch() {
       await RewardStore.dispatch("fetch");
       this.tableData = RewardStore.getters.rewards;
+      for (let index = 0; index < this.tableData.length; index++) {
+        this.tableData[index].updated_at = moment(
+          this.tableData[index].updated_at
+        ).format("MMMM Do YYYY, h:mm:ss a");
+        this.tableData[index].created_at = moment(
+          this.tableData[index].created_at
+        ).format("MMMM Do YYYY, h:mm:ss a");
+        console.log(this.tableData[index]);
+      }
     },
     async handleDelete(index, row) {
       this.$confirm(

@@ -79,7 +79,9 @@ export default {
   methods: {
     getClickedItem(value) {
       this.clickedItem = value;
-      //   console.log(value);
+    },
+    clearForm() {
+      this.clickedItem = [];
     },
     async submitForm(formName) {
       if (this.checkFormEmtry) {
@@ -109,10 +111,8 @@ export default {
             })
             .then(async () => {
               await RewardStore.dispatch("editReward", payload);
-            })
-            .then(() => {
-              console.log(RewardStore.getters.rewards);
-              // window.location.reload();
+              await EventBus.$emit("trans-data");
+              this.clearForm();
             })
             .catch(() => {
               this.$notify.info({
