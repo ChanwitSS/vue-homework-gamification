@@ -2,11 +2,25 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
         <span>วิชา: {{ homework.homework_name }}</span>
+<<<<<<< HEAD
         <el-popover placement="right" width="400" trigger="click">
           <SentForm v-if="role=='Student'"/>
           <!--<SentForm v-if="role=='Teacher'"/>-->
           <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button>
           <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Teacher'">ตรวจงาน</el-button>
+=======
+        <el-popover placement="bottom" width="400" trigger="click" v-if="role=='Student'">
+          <SentForm v-if="role=='Student'"/>
+          <!-- <CheckHomeworkForm :homework="homework" v-if="role=='Teacher'"/> -->
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button>
+          <!-- <el-button style="float: right; padding: 3px 0" slot="reference" type="text"  v-if="role=='Teacher'">ตรวจงาน</el-button> -->
+        </el-popover>
+        <el-popover placement="bottom" width="600" trigger="click" v-if="role=='Teacher'">
+          <!-- <SentForm v-if="role=='Student'"/> -->
+          <CheckHomeworkForm :homework="homework" v-if="role=='Teacher'"/>
+          <!-- <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button> -->
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text"  v-if="role=='Teacher'">ตรวจงาน</el-button>
+>>>>>>> origin/peang
         </el-popover>
 
     </div>
@@ -20,8 +34,14 @@
 
 <script>
 import SentForm from "../forms/HomeworkSentForm.vue";
+<<<<<<< HEAD
 export default {
   components: { SentForm },
+=======
+import CheckHomeworkForm from "../forms/CheckHomeworkForm.vue"
+export default {
+  components: { SentForm,CheckHomeworkForm },
+>>>>>>> origin/peang
   data() {
     return {
       homework_name: null,
@@ -57,6 +77,6 @@ export default {
     width: 380px;
     height: 300px;
     display: inline-block;
-    margin: 10px;
+    margin: 20px;
   }
 </style>

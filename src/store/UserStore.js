@@ -20,21 +20,25 @@ export default new Vuex.Store({
     edit(state,{payload}){
       console.log("edit");
       state.data[payload.index] = payload
-    }
+    },
+    find(state, res) {
+      console.log(res)
+      state.data = res.data
+    },
   },
   actions: {
     async fetch({ commit }) {
       let res = await Axios.get(apiUrl + '/users',)
       commit("fetch", res)
     },
-    /*async find({ commit },id) {
+    async find({ commit },id) {
       // console.log("here");
-      console.log(apiUrl + '/teachers/'+id);
-      let res = await Axios.get(apiUrl + '/teachers/'+id)
+      console.log(apiUrl + '/users/'+id);
+      let res = await Axios.get(apiUrl + '/users/'+id)
       console.log(res)
       commit("find", res)
     },
-    async add({ commit }, payload) {
+    /*async add({ commit }, payload) {
       let body = {
         id: payload.id,
         homework: payload.homework,
