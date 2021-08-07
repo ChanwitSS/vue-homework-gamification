@@ -11,12 +11,12 @@
     </div> -->
     <div v-if="userRole === 'Student'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
-            <Card :homework="homework" />
+            <Card :homework="homework" :role="userRole"/>
         </div>
     </div>
     <div v-if="userRole === 'Teacher'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
-            <Card :homework="homework"/>
+            <Card :homework="homework" :role="userRole"/>
         </div>
     </div>
   </div>
@@ -29,9 +29,10 @@ import Card from '../components/cards/HomeworkCard.vue'
 import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
+import CheckHomeworkForm from '../components/forms/CheckHomeworkForm.vue'
 
 export default {
-    components: { Card,HomeworkSentForm,HomeworkAssignForm },
+    components: { Card, HomeworkSentForm, HomeworkAssignForm, CheckHomeworkForm },
     data() {
         return {
             user: User.getters.user,

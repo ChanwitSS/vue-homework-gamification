@@ -11,10 +11,12 @@ export default {
   components: { BoardTable, Session },
   data() {
     return {
-      
     }
+  },
+  methods: {
   }
 };
 </script>
 
-<style></style>
+<style>
+</style>

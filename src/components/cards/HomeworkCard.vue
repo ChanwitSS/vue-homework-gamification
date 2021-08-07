@@ -3,9 +3,10 @@
     <div slot="header" class="clearfix">
         <span>วิชา: {{ homework.homework_name }}</span>
         <el-popover placement="right" width="400" trigger="click">
-          <Form>
-          </Form>
-          <el-button style="float: right; padding: 3px 0" slot="reference" type="text">ส่งงาน</el-button>
+          <SentForm v-if="role=='Student'"/>
+          <!--<SentForm v-if="role=='Teacher'"/>-->
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button>
+          <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Teacher'">ตรวจงาน</el-button>
         </el-popover>
     </div>
     <div class="text item">
@@ -17,9 +18,9 @@
 </template>
 
 <script>
-import Form from "../forms/HomeworkSentForm.vue";
+import SentForm from "../forms/HomeworkSentForm.vue";
 export default {
-  components: { Form },
+  components: { SentForm },
   data() {
     return {
       homework_name: null,
@@ -27,6 +28,7 @@ export default {
   },
   props: {
     homework: null,
+    role: null,
   },
 };
 </script>
