@@ -107,12 +107,12 @@ export default {
                 message: "Change completed",
               });
             })
-            .then(() => {
-              RewardStore.dispatch("editReward", payload);
+            .then(async () => {
+              await RewardStore.dispatch("editReward", payload);
             })
             .then(() => {
               console.log(RewardStore.getters.rewards);
-              window.location.reload();
+              // window.location.reload();
             })
             .catch(() => {
               this.$notify.info({

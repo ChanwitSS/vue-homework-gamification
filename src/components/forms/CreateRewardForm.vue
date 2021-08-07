@@ -77,7 +77,43 @@ export default {
   },
   methods: {
     async submitForm(formName) {
-      await RewardStore.dispatch("add", this.ruleForm);
+      if (
+        this.ruleForm.reward_name !== "" &&
+        this.ruleForm.reward_point !== "" &&
+        this.ruleForm.reward_remain !== ""
+      ) {
+        this.$confirm(
+          "This will permanently Create the file. Continue?",
+          "Warning",
+          {
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancel",
+            type: "warning",
+          }
+        )
+          .then(() => {
+            this.$notify({
+              type: "success",
+              message: "Create completed",
+            });
+          })
+          .then(() => {
+            RewardStore.dispatch("add", this.ruleForm);
+            this.$refs[formName].resetFields();
+          })
+          .catch(() => {
+            this.$notify({
+              type: "info",
+              message: "Create canceled",
+            });
+          });
+      }
+      else{
+           this.$notify({
+              type: "info",
+              message: "Please complete the form",
+            });
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

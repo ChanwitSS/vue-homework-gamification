@@ -24,7 +24,11 @@
 
       <el-table-column align="right" width="360">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="Type to search" />
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Type (ชื่อรางวัล) to search"
+          />
         </template>
         <template slot-scope="scope">
           <el-button
@@ -75,23 +79,24 @@ export default {
           center: true,
         }
       )
-        .then(() => {
-          this.$message({
+        .then(async () => {
+          this.$notify({
             type: "success",
             message: "Delete completed",
           });
-          RewardStore.dispatch("delete", row);
+          await RewardStore.dispatch("delete", row);
           this.fetch();
-          location.reload();
+          // location.reload();
         })
+        // .then(async () => {
+        //   await this.fetch();
+        // })
         .catch(() => {
-          this.$message({
+          this.$notify({
             type: "info",
             message: "Delete canceled",
           });
-          // this.fetch();
         });
-      // this.fetch();
     },
     routeItemPressed(index, row) {
       EventBus.$emit("route-data", { row, index });

@@ -15,9 +15,22 @@ export default new Vuex.Store({
   mutations: {
     fetch(state, res) {
       state.data = res.data;
+      console.log(state.data);
+    },
+    delete(state, res) {
+      let new_data = [];
+      for (let i = 0; i < state.data.length; i++) {
+        if (!(state.data[i].id === res.data.id)) {
+          new_data.push(state.data[i]);
+        }
+      }
+      console.log(new_data);
+      state.data = new_data;
+      console.log(state);
     },
     add(state, res) {
       state.data.push(res.data);
+      console.log(state.data);
     },
     editR(state, data) {
       // for (let i = 0; i < state.data.length; i++) {
@@ -65,9 +78,11 @@ export default new Vuex.Store({
     },
     async delete({ commit }, payload) {
       let res = await Axios.delete(apiUrl + "/rewards/" + payload.id);
+      commit("delete", res);
     },
     async add({ commit }, payload) {
       let res = await Axios.post(apiUrl + "/rewards/", payload);
+      commit("add", res.data);
     },
   },
   modules: {},
