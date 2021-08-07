@@ -4,7 +4,7 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
-let apiUrl = process.env.POKEDEX_ENDPOINT || 'http://localhost:1337'
+let apiUrl = process.env.VUE_APP_API_HOST
 
 export default new Vuex.Store({
   state: {
@@ -15,50 +15,55 @@ export default new Vuex.Store({
   },
   mutations: {
     fetch(state, res) {
-      console.log(res)
       state.data = res.data
     },
     add(state, res) {
-      console.log(res)
       state.data.push(res.data)
     }
   },
   actions: {
     async fetch({ commit }) {
       let res = await Axios.get(apiUrl + '/homeworks')
-      console.log(res)
       commit("fetch", res)
     },
     async add({ commit }, payload) {
       let body = {
-        id: payload.id,
         homework_name: payload.homework_name,
         description: payload.description,
         point: payload.point,
-        //subject: payload.subject[0].id
+        due_date: payload.due_date,
+        subjects: 
+          [{
+            subject_name: payload.subjects,
+            id: payload.subject_ID,
+          }],
+        teachers:
+          [{
+            id: payload.teacher_ID
+          }],  
+        students:[{
+            id:payload.student_ID
+        }]
+
     }
-      console.log(body)
-      let res = await Axiost.post(apiUrl + '/homeworks', body)
-      console.log(res)
+      let res = await Axios.post(apiUrl + '/homeworks', body)
       if (res.status === 200) {
           commit("add", res)
       } else {
           console.error(res)
       }
   },
-  async edit({ commit }, payload) {
-    let body = {
-        id: payload.id,
-        homework_name: payload.homework_name,
-        description: payload.description,
-        point: payload.point,
-        //subject: payload.subject[0].id
+    async edit({ commit }, payload) {
+      let body = {
+          id: payload.id,
+          homework_name: payload.homework_name,
+          description: payload.description,
+          point: payload.point,
+          //subject: payload.subject[0].id
+      }
+      let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
+      commit("edit", payload.index, res.data )
     }
-    console.log(body)
-    let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
-    console.log(res)
-    commit("edit", payload.index, res.data )
-  }
   },
   modules: {
   }
