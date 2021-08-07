@@ -8,6 +8,7 @@
           <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Student'">ส่งงาน</el-button>
           <el-button style="float: right; padding: 3px 0" slot="reference" type="text" v-if="role=='Teacher'">ตรวจงาน</el-button>
         </el-popover>
+
     </div>
     <div class="text item">
       <p>ชื่อการบ้าน: {{ homework.homework_name }}</p>
