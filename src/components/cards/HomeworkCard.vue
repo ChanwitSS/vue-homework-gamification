@@ -13,7 +13,7 @@
     <div class="text item">
       <p>ชื่อการบ้าน: {{ homework.homework_name }}</p>
       <p>คำอธิบาย: {{ homework.description }}</p>
-      <p>กำหนดส่ง: {{ homework.due_date.substring(0,10) }} {{ homework.due_date.substring(11,16) }}</p>
+      <!--<p>กำหนดส่ง: {{ homework.due_date.substring(0,10) }} {{ homework.due_date.substring(11,16) }}</p>-->
     </div>
   </el-card>
 </template>

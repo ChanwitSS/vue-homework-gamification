@@ -53,17 +53,17 @@ export default new Vuex.Store({
   // },
     async edit({ commit }, payload) {
         let body = {
-            id: payload.id,
-            total_point: payload.total_point,
-            left_point: payload.left_point,
-            used_point: payload.used_point,
-            //subject: payload.subject[0].id
-            }
-            console.log(body)
-            let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
-            console.log(res)
-            commit("edit", payload.index, res.data )
+          id: payload.id,
+          total_point: payload.total_point,
+          left_point: payload.left_point,
+          used_point: payload.used_point,
+        //subject: payload.subject[0].id
         }
+        console.log(body)
+        let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
+        console.log(res)
+        commit("edit", payload.index, res.data )
+      }
     },
   modules: {
   }

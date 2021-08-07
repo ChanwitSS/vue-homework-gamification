@@ -60,12 +60,7 @@ export default {
             console.log(keep);
             arr.push(keep)
             
-          }
-          
-
-
-            
-          
+          }          
           console.log("Fetch reward");
           console.log(this.rewards);
 

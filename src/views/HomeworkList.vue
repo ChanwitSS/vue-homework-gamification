@@ -30,6 +30,7 @@ import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
 import CheckHomeworkForm from '../components/forms/CheckHomeworkForm.vue'
+import Axios from 'axios'
 
 export default {
     components: { Card, HomeworkSentForm, HomeworkAssignForm, CheckHomeworkForm },
@@ -50,22 +51,16 @@ export default {
             this.homeworks = HomeworkStore.getters.homeworks
             this.filter()
         },
-        filter() {
-            let subjects = this.user.subjects.map((obj) => obj.id) 
+        async filter() {
+            let apiUrl = process.env.VUE_APP_API_HOST
+            let res
+            console.log(this.user.id)
             if (this.userRole == 'Student') {
-                for (var i=0; i<this.homeworks.length; i++) {
-                    if (subjects.indexOf(this.homeworks[i].subject.id)!= -1) {
-                        this.filterHomeworks.push(this.homeworks[i])
-                    }
-                }
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_sent=0`)
             } else if (this.userRole == 'Teacher') {
-                for (var i=0; i<this.homeworks.length; i++) {
-                    if (subjects.indexOf(this.homeworks[i].subject.id)!= -1) {
-                        this.filterHomeworks.push(this.homeworks[i])
-                    }
-                }
-                console.log(this.filterHomeworks)
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_check=0`)
             }
+            this.filterHomeworks = res.data
         }
     }
 }

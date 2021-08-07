@@ -30,27 +30,31 @@ export default new Vuex.Store({
       let body = {
         homework_name: payload.homework_name,
         description: payload.description,
-        point: payload.point,
         due_date: payload.due_date,
-        subjects: 
-          [{
-            subject_name: payload.subjects,
-            id: payload.subject_ID,
-          }],
-        teachers:
-          [{
-            id: payload.teacher_ID
-          }],  
-        students:[{
-            id:payload.student_ID
-        }]
-
-    }
+        subject: payload.subject
+      }
+      //add homework
       let res = await Axios.post(apiUrl + '/homeworks', body)
       if (res.status === 200) {
-          commit("add", res)
+        commit("add", res)
       } else {
-          console.error(res)
+        console.error(res)
+      }
+      //get students by subject_id
+      let students_res = await Axios.get(apiUrl + `/users?role=5&subjects=${body.subject}`)
+      console.log(student_res)
+      //set homework to each student
+      let student_homework_body = {
+        
+      }
+      for (let i=0; i<students_res.data.length; i++) {
+        let res = await Axios.post(apiUrl + `/student-homeworks`, {
+          users_permissions_user: students_res.data[i].id,
+          homework: body,
+          is_check: false,
+          is_sent: false
+        })
+        console.log(res)
       }
   },
     async edit({ commit }, payload) {

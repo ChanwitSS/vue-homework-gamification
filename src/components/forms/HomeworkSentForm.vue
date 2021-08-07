@@ -2,8 +2,6 @@
   <div>
     <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/"
     ref="upload"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
       :auto-upload="false">
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">Drop file here or <em>Click to select file</em><br><label style="font-size:0.75em" @click="changeUpload"> with a size less than 500kb</label></div>
