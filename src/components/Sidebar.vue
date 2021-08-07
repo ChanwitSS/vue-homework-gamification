@@ -8,7 +8,7 @@
                 <i class="el-icon-document"></i>
                 <span slot="title">การบ้าน</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="changeRounter('reward')" v-if="userRole == 'Student'" :disabled="isDisabled">
+            <el-menu-item index="2" @click="changeRounter('rewards/redeem')" v-if="userRole == 'Student'" :disabled="isDisabled">
                 <i class="el-icon-setting"></i>
                 <span slot="title">คะแนน - ประวัติการแลกรางวัล</span>
             </el-menu-item>

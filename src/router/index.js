@@ -7,6 +7,8 @@ import ManageRewards from "../views/ManageRewards.vue";
 import ManageUsers from "../views/ManageUsers.vue";
 //import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+
+import RewardHistory from "../views/RewardHis"
 import RedeemRewards from "../views/RedeemRewards.vue";
 
 
@@ -36,6 +38,13 @@ const routes = [
     name: "Leaderboard",
     component: Leaderboard,
   },
+
+  {
+    path: "/rewardsHistory",
+    name: "RewardsHistory",
+    component: RewardHistory,
+  },
+  
   /*{
     path: "/home",
     name: "Home",

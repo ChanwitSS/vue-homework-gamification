@@ -42,7 +42,7 @@
         </div>
         <div class="addButton" v-else-if="check==0">
           <el-button type="success" round @click="add()">ยืนยัน</el-button>
-          <el-button type="danger" round @click="clearForm()">ยกเลิก</el-button>
+          <el-button type="danger" round @click="cancel()">ยกเลิก</el-button>
         </div>
         <br>
         
@@ -98,16 +98,8 @@ export default {
 
         },
 
-        clearForm(){
-            this.form={
-                homework_name:'',
-                description: '',
-                point:'',
-                time:''
-            }
+        cancel(){
             this.check=1
-            this.chooseSubject = "เลือกวิชาที่จะสั่ง"
-            this.sub_ID = 0
         },
         add(){
           let keep

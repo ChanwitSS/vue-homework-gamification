@@ -17,6 +17,10 @@ export default new Vuex.Store({
     fetch(state, res) {
       state.data = res.data
     },
+    edit(state,{payload}){
+      console.log("edit");
+      state.data[payload.index] = payload
+    }
   },
   actions: {
     async fetch({ commit }) {
@@ -46,21 +50,21 @@ export default new Vuex.Store({
       } else {
           console.error(res)
       }*/
-  },
-    /*async edit({ commit }, payload) {
+  // },
+    async edit({ commit }, payload) {
         let body = {
             id: payload.id,
-            homework_name: payload.homework_name,
-            description: payload.description,
-            point: payload.point,
+            total_point: payload.total_point,
+            left_point: payload.left_point,
+            used_point: payload.used_point,
             //subject: payload.subject[0].id
             }
             console.log(body)
-            let res = await Axiost.put(apiUrl + '/teachers/' + payload.id, body)
+            let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
             console.log(res)
             commit("edit", payload.index, res.data )
         }
-    },*/
+    },
   modules: {
   }
 })
