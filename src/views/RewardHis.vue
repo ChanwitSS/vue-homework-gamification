@@ -1,7 +1,12 @@
 <template>
 <div>
 
-    <el-button slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards')" round>แลกรางวัล</el-button>
+    <div style="text-align:center">
+      <label class="headerName">ประวัติการแลกรางวัล</label> 
+    </div>
+
+
+    <el-button class="btn" slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards/redeem')" round>แลกรางวัล</el-button>
     <div>
       
     </div>
@@ -60,7 +65,7 @@ export default {
 
 
             
-          this.rewards = arr
+          
           console.log("Fetch reward");
           console.log(this.rewards);
 
@@ -73,6 +78,19 @@ export default {
 
 </script>
 
-<style>
+<style scoped lang="scss">
+.btn{
+
+    position: absolute;
+    right: 0%;
+    top: 5%;
+
+}
+.headerName{
+  font-size: 5em;
+  font-family: TAGonNon;
+  text-shadow: 1px 0.5px;
+
+}
 
 </style>

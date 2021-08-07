@@ -38,11 +38,7 @@ const routes = [
     name: "Leaderboard",
     component: Leaderboard,
   },
-  {
-    path: "/form",
-    name: "Form",
-    component: Form,
-  },
+
   {
     path: "/rewardsHistory",
     name: "RewardsHistory",

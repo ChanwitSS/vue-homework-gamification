@@ -36,4 +36,10 @@ html {
   width: 1215px;
   min-height: 735px;
 }
+
+@font-face {
+  font-family: "TAGonNon";
+  src: local("TAGonNon"),
+   url(UturnaRoundDEMO-Thin.ttf);
+}
 </style>
