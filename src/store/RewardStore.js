@@ -107,6 +107,7 @@ export default new Vuex.Store({
     },
     async delete({ commit }, payload) {
       let res = await Axios.delete(apiUrl + "/rewards/" + payload.id);
+      console.log(res)
       commit("delete", res);
     },
     async addReward({ commit }, payload) {

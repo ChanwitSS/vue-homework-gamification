@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-        <span>วิชา: {{ homework.homework_name }}</span>
+        <span>วิชา: {{ homework.homework.homework_name }}</span>
         <el-popover placement="bottom" width="400" trigger="click" v-if="role=='Student'">
           <SentForm v-if="role=='Student'"/>
           <!-- <CheckHomeworkForm :homework="homework" v-if="role=='Teacher'"/> -->
@@ -17,8 +17,9 @@
 
     </div>
     <div class="text item">
-      <p>ชื่อการบ้าน: {{ homework.homework_name }}</p>
-      <p>คำอธิบาย: {{ homework.description }}</p>
+      <p>ชื่อการบ้าน: {{ homework.homework.homework_name }}</p>
+      <p>คำอธิบาย: {{ homework.homework.description }}</p>
+      <p>กำหนดส่ง: {{ homework.homework.due_date }}</p>
       <!--<p>กำหนดส่ง: {{ homework.due_date.substring(0,10) }} {{ homework.due_date.substring(11,16) }}</p>-->
     </div>
   </el-card>

@@ -98,7 +98,7 @@ export default {
             });
           })
           .then(() => {
-            RewardStore.dispatch("add", this.ruleForm);
+            RewardStore.dispatch("addReward", this.ruleForm);
             this.$refs[formName].resetFields();
           })
           .catch(() => {
