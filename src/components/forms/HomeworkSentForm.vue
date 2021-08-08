@@ -1,18 +1,10 @@
 <template>
   <div>
-    <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/"
-    ref="upload"
-      :auto-upload="false">
-      <i class="el-icon-upload"></i>
-      <div class="el-upload__text">Drop file here or <em>Click to select file</em><br><label style="font-size:0.75em" @click="changeUpload"> with a size less than 500kb</label></div>
-    </el-upload>
-    <el-button style="margin-left: 150px;" size="small" type="success" @click="changeUpload">upload to server</el-button>
-    
-    <el-alert title="success" type="success" show-icon="" v-if="uploadFile==1"></el-alert>
-  </div>
+  <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">  </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data(){
     return{
@@ -21,15 +13,37 @@ export default {
 
   },
   methods:{
-    changeUpload(){
-      if (this.uploadFile==0) {
-        this.uploadFile =1
-        this.$refs.upload.submit();
-      } else {
-        this.uploadFile =0
+    uploadImage(event) {
+
+    let apiUrl = process.env.VUE_APP_API_HOST
+
+    let data = new FormData();
+    // console.log(data);
+    // data.append('name', 'my-picture');
+    // console.log(data);
+    // data.append('file', event.target.files[0]); 
+    // console.log(data);
+
+    console.log(event.target.files[0]);
+
+    let config = {
+      header : {
+        'Content-Type' : 'Attachment'
       }
-      
     }
+
+    let body = {
+      attachment_file: event.target.files[0],
+      name: 'my-picture'
+    }
+
+
+    axios.post(apiUrl+"/attachments", body,config).then(
+      response => {
+        console.log('image upload response > ', response)
+      }
+    )
+  }
 
   }
 

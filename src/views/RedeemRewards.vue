@@ -3,11 +3,14 @@
 
    <!-- <el-button slot="reference" type="primary" icon="el-icon-receiving" round @click="changeRounter('rewardsHistory')">ประวัติการแลกรางวัล</el-button> -->
 
-  <div style="text-align:center">
-    <label class="headerName">แลกของรางวัล</label> 
-    <br>
-    <!-- <label style="margin:0">คะแนนคงเหลือของคุณคือ {{ who.left_point}} คะแนน</label> -->
-  </div>
+  <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">แลกรางวัล</label>
+        </div>
+        <br>
+    </header>
 
   <el-button class="btn" slot="reference" type="primary" icon="el-icon-receiving" round @click="changeRounter('rewardsHistory')">ประวัติการแลกรางวัล</el-button>
 
@@ -74,8 +77,8 @@ export default {
 .btn{
 
     position: absolute;
-    right: 0%;
-    top: 5%;
+    right: 6%;
+    top: 6%;
 
 }
 .headerName{

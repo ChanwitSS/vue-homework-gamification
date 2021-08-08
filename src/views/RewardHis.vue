@@ -1,9 +1,14 @@
 <template>
 <div>
 
-    <div style="text-align:center">
-      <label class="headerName">ประวัติการแลกรางวัล</label> 
-    </div>
+    <header class="top-head" style="text-align:center">
+      <br>
+      <div class="cover-top"></div>
+      <div>
+        <label class="headerName">ประวัติการแลกรางวัล</label> 
+      </div>
+    <br>
+    </header>
 
 
     <el-button class="btn" slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards/redeem')" round>แลกรางวัล</el-button>

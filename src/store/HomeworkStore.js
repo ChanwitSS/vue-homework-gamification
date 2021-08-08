@@ -76,7 +76,7 @@ export default new Vuex.Store({
           point: payload.point,
           //subject: payload.subject[0].id
       }
-      let res = await Axiost.put(apiUrl + '/homeworks/' + payload.id, body)
+      let res = await Axios.put(apiUrl + '/homeworks/' + payload.id, body)
       commit("edit", payload.index, res.data )
     }
   },

@@ -6,9 +6,16 @@
         <el-button slot="reference" type="primary" icon="el-icon-circle-plus" round>สั่งการบ้าน</el-button>
     </el-popover>-->
 
-    <!-- <div>
-        <homework-sent-form></homework-sent-form>
-    </div> -->
+    <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">ตรวจการบ้าน</label>
+        </div>
+        <br>
+    </header>
+
+
     <div v-if="userRole === 'Student'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
             <Card :homework="homework" :role="userRole"/>
@@ -74,6 +81,25 @@ export default {
     margin-right: 20px;
     position: relative;
     display: inline-block;
+    left: 50px;
 }
+.headerName{
+  font-size: 5.5em;
+  font-family: TAGonNon;
+  color: #000000;
+  /* font-weight:bold; */
+  text-shadow: 1px 1.5px;
+
+}
+.top-head{
+    /* background-color: rgb(183, 199, 233); */
+    background-image: url(../assets/stationary_fade3.jpg);  
+
+    /* background: rgba(5, 103, 195, 0.411) */
+}
+
+
+
+
 </style>
 

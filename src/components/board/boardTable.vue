@@ -128,7 +128,7 @@ export default {
 <style>
 .center {
   position: fixed; /* or absolute */
-  top: 50%;
+  top: 20px;
   left: 10px;
 }
 </style>

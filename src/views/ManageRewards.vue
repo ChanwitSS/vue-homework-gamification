@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <div class="">
     <admin-reward-table></admin-reward-table>
@@ -20,3 +21,5 @@ export default {
 </script>
 
 <style></style>
+=======
+>>>>>>> origin/peang
