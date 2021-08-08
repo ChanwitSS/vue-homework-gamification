@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card :body-style="{ padding: '0' }" style="margin: 20px">
+        <el-card :body-style="{ padding: '0' }" style="margin: 20px" class="rcard">
         <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
           <div style="padding: 14px">
               <label style="font-size:1.5em"><b>{{reward.reward_name}}</b></label> <br>
@@ -25,8 +25,6 @@ export default {
   },
     methods:{
         changeCheck(){
-          console.log("click");
-          console.log(this.reward);
           if(this.check==1){
             this.check = 0
           }
@@ -37,16 +35,12 @@ export default {
         },
         exchange(r){
           r.reward_remain--
-          console.log("remain : "+r.reward_remain);
-          console.log(r);
           let payload=r
-          console.log(this.who);
           this.who.left_point -= r.reward_point
           this.who.used_point += r.reward_point
 
           UserStore.dispatch("edit",this.who)
           payload.users.push(this.who)
-          console.log(payload);
 
           // if (payload.reward_remain==0) {
           //   RewardStore.dispatch("delete",payload)

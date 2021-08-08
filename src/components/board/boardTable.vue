@@ -9,7 +9,7 @@
       <div align='center'>
         <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
         <br>
-        <el-button style="margin-top: 20px" @click="dateFilter">เลือก</el-button>
+        <el-button style="margin-top: 20px" @click="onClickSelectRange">เลือก</el-button>
       </div>
       <el-button slot="reference">เลือกช่วงเวลา</el-button>
     </el-popover>
@@ -77,6 +77,7 @@
 
 <script>
 import UserStore from "@/store/UserStore";
+import Axios from "axios"
 import moment from 'moment'
 export default {
   data() {
@@ -96,26 +97,38 @@ export default {
       await UserStore.dispatch("fetch");
       UserStore.getters.users.map((item, index) => {if (item.role.name == "Student") { this.tableData.push(item)}});
     },
-    /*dateFilter() {
-      let start = moment(this.range.start)
-      let end = moment(this.range.end)
-      if (this.radio == 'receive') {
-        for (let i=0; i<this.tableData.length; i++) {
-          if ( )
+    onClickSelectRange() {
+      this.dateFilter()
+    },
+    async dateFilter() {
+      let apiUrl = process.env.VUE_APP_API_HOST
+      let start = moment(this.range.start).format('YYYY-MM-DD')
+      let end = moment(this.range.end).format('YYYY-MM-DD')
+      let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`)
+      let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`)
+      console.log(student_reward_res)
+      for (let i=0; i<this.tableData.length; i++) {
+        this.tableData[i].used_point = 0 
+        this.tableData[i].total_point = 0
+        for (let j=0; j<student_homework_res.data.length; j++) {
+          if (student_homework_res.data[j].users_permissions_user.id == this.tableData[i].id) {
+            this.tableData[i].total_point += student_homework_res.data[j].point
+          }
         }
-      } else {
-        for (let i=0; i<this.tableData.length; i++) {
-          if (tableData[i].rewards)
-        }        
+        for (let j=0; j<student_reward_res.data.length; j++) {
+          if (student_reward_res.data[j].users_permissions_user.id == this.tableData[i].id) {
+            this.tableData[i].used_point += student_reward_res.data[j].point
+          }
+        }
       }
-    }*/
+    }
   },
 };
 </script>
 <style>
 .center {
   position: fixed; /* or absolute */
-  top: 50%;
+  top: 20px;
   left: 10px;
 }
 </style>

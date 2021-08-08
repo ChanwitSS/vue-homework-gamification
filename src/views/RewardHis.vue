@@ -1,9 +1,14 @@
 <template>
 <div>
 
-    <div style="text-align:center">
-      <label class="headerName">ประวัติการแลกรางวัล</label> 
-    </div>
+    <header class="top-head" style="text-align:center">
+      <br>
+      <div class="cover-top"></div>
+      <div>
+        <label class="headerName">ประวัติการแลกรางวัล</label> 
+      </div>
+    <br>
+    </header>
 
 
     <el-button class="btn" slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards/redeem')" round>แลกรางวัล</el-button>
@@ -42,33 +47,18 @@ export default {
     },
     methods:{
         async fetch() {
-          console.log("Auth Reward");
-          console.log(AuthUser.getters.user);
           this.who = AuthUser.getters.user
-          console.log(this.who);
 
           await RewardStore.dispatch("fetch")
           this.rewards = RewardStore.getters.rewards
-          console.log(this.rewards);
           let arr = []
 
 
           for (let index = 0; index < this.who.rewards.length; index++) {
             await RewardStore.dispatch("find",this.who.rewards[index].id)
             let keep = RewardStore.getters.rewards
-            console.log("keep");
-            console.log(keep);
             arr.push(keep)
-            
-          }
-          
-
-
-            
-          
-          console.log("Fetch reward");
-          console.log(this.rewards);
-
+          }          
         },
         changeRounter(route) {
           this.$router.push(`/${route}`)

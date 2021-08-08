@@ -6,9 +6,16 @@
         <el-button slot="reference" type="primary" icon="el-icon-circle-plus" round>สั่งการบ้าน</el-button>
     </el-popover>-->
 
-    <!-- <div>
-        <homework-sent-form></homework-sent-form>
-    </div> -->
+    <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">ตรวจการบ้าน</label>
+        </div>
+        <br>
+    </header>
+
+
     <div v-if="userRole === 'Student'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
             <Card :homework="homework" :role="userRole"/>
@@ -30,6 +37,7 @@ import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
 import CheckHomeworkForm from '../components/forms/CheckHomeworkForm.vue'
+import Axios from 'axios'
 
 export default {
     components: { Card, HomeworkSentForm, HomeworkAssignForm, CheckHomeworkForm },
@@ -50,22 +58,16 @@ export default {
             this.homeworks = HomeworkStore.getters.homeworks
             this.filter()
         },
-        filter() {
-            let subjects = this.user.subjects.map((obj) => obj.id) 
+        async filter() {
+            let apiUrl = process.env.VUE_APP_API_HOST
+            let res
+            console.log(this.user.id)
             if (this.userRole == 'Student') {
-                for (var i=0; i<this.homeworks.length; i++) {
-                    if (subjects.indexOf(this.homeworks[i].subject.id)!= -1) {
-                        this.filterHomeworks.push(this.homeworks[i])
-                    }
-                }
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_sent=0`)
             } else if (this.userRole == 'Teacher') {
-                for (var i=0; i<this.homeworks.length; i++) {
-                    if (subjects.indexOf(this.homeworks[i].subject.id)!= -1) {
-                        this.filterHomeworks.push(this.homeworks[i])
-                    }
-                }
-                console.log(this.filterHomeworks)
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_check=0`)
             }
+            this.filterHomeworks = res.data
         }
     }
 }
@@ -79,6 +81,25 @@ export default {
     margin-right: 20px;
     position: relative;
     display: inline-block;
+    left: 50px;
 }
+.headerName{
+  font-size: 5.5em;
+  font-family: TAGonNon;
+  color: #000000;
+  /* font-weight:bold; */
+  text-shadow: 1px 1.5px;
+
+}
+.top-head{
+    /* background-color: rgb(183, 199, 233); */
+    background-image: url(../assets/stationary_fade3.jpg);  
+
+    /* background: rgba(5, 103, 195, 0.411) */
+}
+
+
+
+
 </style>
 
