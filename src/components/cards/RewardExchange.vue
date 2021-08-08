@@ -57,21 +57,20 @@ export default {
           });
           r.reward_remain--
           console.log("remain : "+r.reward_remain);
-          console.log(r);
-          let payload=r
+          let payload = r
           this.who.left_point -= r.reward_point
           this.who.used_point += r.reward_point
 
           UserStore.dispatch("edit",this.who)
           payload.users.push(this.who)
-          console.log(payload);
 
           // if (payload.reward_remain==0) {
           //   RewardStore.dispatch("delete",payload)
           // } else {
           //   RewardStore.dispatch("edit",payload)
           // }
-          RewardStore.dispatch("edit",payload)
+          RewardStore.dispatch("edit", payload)
+          RewardStore.dispatch("addRecord", { userPayload: this.who, rewardPayload: payload })
 
           this.changeCheck()
 

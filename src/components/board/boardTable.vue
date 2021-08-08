@@ -9,7 +9,7 @@
       <div align='center'>
         <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
         <br>
-        <el-button style="margin-top: 20px" @click="dateFilter">เลือก</el-button>
+        <el-button style="margin-top: 20px" @click="onClickSelectRange">เลือก</el-button>
       </div>
       <el-button slot="reference">เลือกช่วงเวลา</el-button>
     </el-popover>
@@ -77,6 +77,7 @@
 
 <script>
 import UserStore from "@/store/UserStore";
+import Axios from "axios"
 import moment from 'moment'
 export default {
   data() {
@@ -96,19 +97,29 @@ export default {
       await UserStore.dispatch("fetch");
       UserStore.getters.users.map((item, index) => {if (item.role.name == "Student") { this.tableData.push(item)}});
     },
-    /*dateFilter() {
-      let start = moment(this.range.start)
-      let end = moment(this.range.end)
-      if (this.radio == 'receive') {
-        for (let i=0; i<this.tableData.length; i++) {
-          if ( )
+    onClickSelectRange() {
+      this.dateFilter()
+    },
+    async dateFilter() {
+      let apiUrl = process.env.VUE_APP_API_HOST
+      //http://localhost:1337/
+      let start = moment(this.range.start).format('YYYY-MM-DD')
+      let end = moment(this.range.end).format('YYYY-MM-DD')
+      let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`)
+      let reward_res = await Axios.get(apiUrl)
+
+      for (let i=0; i<this.tableData.length; i++) {
+        this.tableData[i].used_point = 0 
+        this.tableData[i].total_poin = 0
+        for (let j=0; i<student_homework_res.data.length; j++) {
+          if (student_homework_res.data[j].users_permissions_user.id ==  this.tableData[i].id) {
+            this.tableData[i].total_point += student_homework_res.data[j].point
+          }
         }
-      } else {
-        for (let i=0; i<this.tableData.length; i++) {
-          if (tableData[i].rewards)
-        }        
       }
-    }*/
+
+
+    }
   },
 };
 </script>

@@ -13,37 +13,31 @@ export default new Vuex.Store({
   },
   mutations: {
     fetch(state, res) {
-      console.log(res)
       state.data = res.data
     },
     find(state, res) {
-      console.log(res)
       state.data = res.data
     },
     add(state, res) {
-      console.log(res)
       state.data.push(res.data)
     },
     // delete(state, res) {
     //   console.log(res)
     //   state.data.pop(res.data)
     // },
-    edit(state,{payload}){
-      console.log("edit");
-      state.data[payload.index] = payload
-    }
+    edit(state,{ index, res }){
+      console.log(res)
+      state.data[index] = res.data
+    },
   },
   actions: {
     async fetch({ commit }) {
       // console.log("here");
       let res = await Axios.get(apiUrl + '/rewards')
-      console.log(res)
       commit("fetch", res)
     },
     async find({ commit },id) {
-      console.log(apiUrl + '/rewards/'+id);
       let res = await Axios.get(apiUrl + '/rewards/'+id)
-      console.log(res)
       commit("find", res)
 
 
@@ -57,9 +51,7 @@ export default new Vuex.Store({
         students: payload.students
         
     }
-      console.log(body)
       let res = await Axios.post(apiUrl + '/rewards', body)
-      console.log(res)
       if (res.status === 200) {
           commit("add", res)
       } else {
@@ -73,13 +65,33 @@ export default new Vuex.Store({
       reward_point: payload.reward_point,
       reward_remain: payload.reward_remain,
       users: payload.users
-        //subject: payload.subject[0].id
+      //subject: payload.subject[0].id
+    }
+    let res = await Axios.put(apiUrl + '/rewards/' + payload.id, body)
+    commit("edit", { index: payload.index, res })
+  },
+  async addRecord({ commit }, { userPayload, rewardPayload }) {
+    let rewardBody = {
+      id: rewardPayload.id,
+      reward_name: rewardPayload.reward_name,
+      reward_point: rewardPayload.reward_point,
+      reward_remain: rewardPayload.reward_remain,
+      users: rewardPayload.users
+    }
+    let body = {
+      users_permissions_user: userPayload,
+      reward: rewardPayload,
     }
     console.log(body)
-    let res = await Axios.put(apiUrl + '/rewards/' + payload.id, body)
-    console.log(res)
-    commit("edit", payload.index, res.data )
-  },
+    /*for (let i=0; i<students_res.data.length; i++) {
+      let res = await Axios.post(apiUrl + `/student-homeworks`, {
+        users_permissions_user: students_res.data[i].id,
+        homework: body,
+        is_check: false,
+        is_sent: false
+      })
+    }*/
+  }
   // async delete({ commit }, payload) {
   //   let body = {
   //     id: payload.id,

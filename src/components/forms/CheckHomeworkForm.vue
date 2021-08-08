@@ -1,20 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>
-    <el-upload class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :file-list="fileList"
-        list-type="picture">
-    <el-button size="small" type="primary">Click to upload</el-button>
-    <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-    </el-upload>
-  </div>
-</template>
-
-<script>
-export default {
-
-=======
   <!-- <el-table :data="student" style="width: 100%" height="250">
     <el-table-column prop="first_name" label="ชื่อ" width="120"></el-table-column>
     <el-table-column prop="last_name" label="นามสกุล" width="120"></el-table-column>
@@ -74,50 +58,30 @@ export default {
   },
     methods: {
         async fetch() {
-          console.log("fetch!!");
-          console.log(this.user);
-          console.log("subject");
-          console.log(this.homework.subject.id); 
 
           await SubjectStore.dispatch("find",this.homework.subject.id)
 
           this.student = SubjectStore.getters.subjects.users
-          
-          console.log(this.student);
 
           for (let index = 0; index < this.student.length; index++) {
-            console.log(this.student[index]);
             await UserStore.dispatch("find",this.student[index].id)
             this.check = UserStore.getters.users
-            console.log("user");
-            console.log(this.check);
             if (this.check.role.type === "teacher") {
               this.student.splice(index, 1);
             }
-            console.log("index :"+index);
-            console.log(this.student);
-            
-          }
-
-          console.log(this.student)
-          
+          }   
         },
         handleEdit(index, row) {
-        console.log(index, row);
       },
 
     }
->>>>>>> origin/peang
 }
 </script>
 
 <style>
-<<<<<<< HEAD
-=======
 th{
   width: 200px
 }
 
->>>>>>> origin/peang
 
 </style>

@@ -30,10 +30,7 @@ import HomeworkSentForm from "../components/forms/HomeworkSentForm.vue"
 import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
 import CheckHomeworkForm from '../components/forms/CheckHomeworkForm.vue'
-<<<<<<< HEAD
 import Axios from 'axios'
-=======
->>>>>>> origin/peang
 
 export default {
     components: { Card, HomeworkSentForm, HomeworkAssignForm, CheckHomeworkForm },

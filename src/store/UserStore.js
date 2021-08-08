@@ -17,12 +17,11 @@ export default new Vuex.Store({
     fetch(state, res) {
       state.data = res.data
     },
-    edit(state,{payload}){
-      console.log("edit");
-      state.data[payload.index] = payload
+    edit(state,{ index, res }){
+      console.log(res)
+      state.data[index] = res.data
     },
     find(state, res) {
-      console.log(res)
       state.data = res.data
     },
   },
@@ -33,9 +32,7 @@ export default new Vuex.Store({
     },
     async find({ commit },id) {
       // console.log("here");
-      console.log(apiUrl + '/users/'+id);
       let res = await Axios.get(apiUrl + '/users/'+id)
-      console.log(res)
       commit("find", res)
     },
     /*async add({ commit }, payload) {
@@ -63,10 +60,8 @@ export default new Vuex.Store({
           used_point: payload.used_point,
         //subject: payload.subject[0].id
         }
-        console.log(body)
         let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
-        console.log(res)
-        commit("edit", payload.index, res.data )
+        commit("edit", { index: payload.index, res })
       }
     },
   modules: {
