@@ -1,4 +1,13 @@
 <template>
+<div>
+<header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName" >กระดานคะแนน</label>
+        </div>
+        <br>
+    </header>
   <el-table
     class="center"
     :data="
@@ -27,6 +36,7 @@
     </el-table-column>
     <el-table-column label="ID" sortable prop="id"></el-table-column>
   </el-table>
+</div>
 </template>
 
 <script>
@@ -52,7 +62,7 @@ export default {
 <style>
 .center {
   position: fixed; /* or absolute */
-  top: 50%;
+  top: 20px;
   left: 10px;
 }
 </style>

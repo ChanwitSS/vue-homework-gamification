@@ -31,9 +31,9 @@ html {
 }
 .content {
   position: fixed;
-  top: 20px;
-  left: 290px;
-  width: 1215px;
+  left: 275px;
+  top: -1px;
+  width: 1405px;
   min-height: 735px;
 }
 
