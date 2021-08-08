@@ -102,23 +102,25 @@ export default {
     },
     async dateFilter() {
       let apiUrl = process.env.VUE_APP_API_HOST
-      //http://localhost:1337/
       let start = moment(this.range.start).format('YYYY-MM-DD')
       let end = moment(this.range.end).format('YYYY-MM-DD')
       let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`)
-      let reward_res = await Axios.get(apiUrl)
-
+      let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`)
+      console.log(student_reward_res)
       for (let i=0; i<this.tableData.length; i++) {
         this.tableData[i].used_point = 0 
-        this.tableData[i].total_poin = 0
-        for (let j=0; i<student_homework_res.data.length; j++) {
-          if (student_homework_res.data[j].users_permissions_user.id ==  this.tableData[i].id) {
+        this.tableData[i].total_point = 0
+        for (let j=0; j<student_homework_res.data.length; j++) {
+          if (student_homework_res.data[j].users_permissions_user.id == this.tableData[i].id) {
             this.tableData[i].total_point += student_homework_res.data[j].point
           }
         }
+        for (let j=0; j<student_reward_res.data.length; j++) {
+          if (student_reward_res.data[j].users_permissions_user.id == this.tableData[i].id) {
+            this.tableData[i].used_point += student_reward_res.data[j].point
+          }
+        }
       }
-
-
     }
   },
 };

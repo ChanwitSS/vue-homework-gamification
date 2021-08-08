@@ -6,19 +6,18 @@
   <div style="text-align:center">
     <label class="headerName">แลกของรางวัล</label> 
     <br>
-        <div >
-        <el-row >
-            <el-col >
-                <RewardExchange :reward="reward" :who="who"/>
-            </el-col>
-        </el-row>
-    </div>
     <!-- <label style="margin:0">คะแนนคงเหลือของคุณคือ {{ who.left_point}} คะแนน</label> -->
   </div>
 
   <el-button class="btn" slot="reference" type="primary" icon="el-icon-receiving" round @click="changeRounter('rewardsHistory')">ประวัติการแลกรางวัล</el-button>
 
-
+    <div>
+        <el-row >
+            <el-col :span="6" v-for="reward in rewards" v-bind:key="reward">
+                <RewardExchange :reward="reward" :who="who"/>
+            </el-col>
+        </el-row>
+    </div>
 </div>
 
   
@@ -30,7 +29,7 @@ import RewardStore from "../store/RewardStore"
 import RewardExchange from "../components/cards/RewardExchange.vue"
 import AuthUser from "../store/AuthUser"
 export default {
-    components: {RewardExchange},
+    components: { RewardExchange },
   data(){
     return{
       rewards:[],
@@ -44,7 +43,6 @@ export default {
     methods:{
         async fetch() {
           this.who = AuthUser.getters.user
-
           await RewardStore.dispatch("fetch")
           this.rewards = RewardStore.getters.rewards
           let arr = []
@@ -61,6 +59,7 @@ export default {
           });
 
           this.rewards = arr
+          console.log(this.rewards)
 
         },
         changeRounter(route) {
@@ -85,7 +84,4 @@ export default {
   text-shadow: 1px 0.5px;
 
 }
-
-
-
 </style>

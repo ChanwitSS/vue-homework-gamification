@@ -38,9 +38,8 @@ export default new Vuex.Store({
     },
     async find({ commit },id) {
       let res = await Axios.get(apiUrl + '/rewards/'+id)
+      console.log(id)
       commit("find", res)
-
-
     },
     async add({ commit }, payload) {
       let body = {
@@ -80,17 +79,10 @@ export default new Vuex.Store({
     }
     let body = {
       users_permissions_user: userPayload,
-      reward: rewardPayload,
+      reward: rewardBody.id,
+      point: rewardBody.reward_point
     }
-    console.log(body)
-    /*for (let i=0; i<students_res.data.length; i++) {
-      let res = await Axios.post(apiUrl + `/student-homeworks`, {
-        users_permissions_user: students_res.data[i].id,
-        homework: body,
-        is_check: false,
-        is_sent: false
-      })
-    }*/
+    let res = await Axios.post(apiUrl + `/student-rewards`, body)
   }
   // async delete({ commit }, payload) {
   //   let body = {
