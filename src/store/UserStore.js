@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import Auth from '../services/auth'
 
 Vue.use(Vuex)
 
@@ -27,12 +28,12 @@ export default new Vuex.Store({
   },
   actions: {
     async fetch({ commit }) {
-      let res = await Axios.get(apiUrl + '/users',)
+      let res = await Axios.get(apiUrl + '/users', Auth.getApiHeader)
       commit("fetch", res)
     },
     async find({ commit },id) {
       // console.log("here");
-      let res = await Axios.get(apiUrl + '/users/'+id)
+      let res = await Axios.get(apiUrl + '/users/'+ id, Auth.getApiHeader)
       commit("find", res)
     },
     /*async add({ commit }, payload) {
@@ -60,7 +61,7 @@ export default new Vuex.Store({
           used_point: payload.used_point,
         //subject: payload.subject[0].id
         }
-        let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
+        let res = await Axios.put(apiUrl + '/users/' + payload.id, body, Auth.getApiHeader)
         commit("edit", { index: payload.index, res })
       }
     },

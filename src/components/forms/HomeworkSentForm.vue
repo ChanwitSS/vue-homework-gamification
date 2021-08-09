@@ -1,16 +1,15 @@
 <template>
   <div class='box'>
-      <el-upload
-        class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed"
-        :file-list="fileList" >
-        <el-button size="small" type="primary">แนบเอกสาร</el-button>
-      </el-upload>
-      <el-button size="medium" type="success" style="margin-left: 40%; margin-top: 100px;">ส่งงาน</el-button>
+    <el-upload
+      class="upload-demo"
+      ref="upload"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :auto-upload="false">
+      <el-button slot="trigger" size="small" type="primary">select file</el-button>
+      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+      <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+    </el-upload>
+    <el-button size="medium" type="success" style="margin-left: 40%; margin-top: 100px;">ส่งงาน</el-button>
   </div>
 </template>
 
@@ -49,7 +48,7 @@ export default {
     }
 
 
-    axios.post(apiUrl+"/attachments", body,config).then(
+    axios.post(apiUrl+"/attachments", body, config).then(
       response => {
         console.log('image upload response > ', response)
       }

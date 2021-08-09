@@ -5,14 +5,10 @@
       <el-radio-button label="receive">คะแนนที่ได้รับ</el-radio-button>
       <el-radio-button label="used">คะแนนที่ใช้</el-radio-button>
     </el-radio-group>
-<<<<<<< HEAD
-    <el-popover placement="right" width="400" trigger="click" style="position: fixed; right: 5%">
-=======
 
 
 
     <el-popover placement="right" width="400" trigger="click" style="position: fixed;margin-left:20px">
->>>>>>> origin/peang
       <div align='center'>
         <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
         <br>
@@ -89,6 +85,8 @@
 import UserStore from "@/store/UserStore";
 import Axios from "axios"
 import moment from 'moment'
+import Auth from '../../services/auth'
+
 export default {
   data() {
     return {
@@ -115,8 +113,8 @@ export default {
         let apiUrl = process.env.VUE_APP_API_HOST
         let start = moment(this.range.start)/*.subtract(7, 'hours')*/.format('YYYY-MM-DD')
         let end = moment(this.range.end)/*.subtract(7, 'hours')*/.format('YYYY-MM-DD')
-        let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`)
-        let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`)
+        let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
+        let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
         for (let i=0; i<this.tableData.length; i++) {
           this.tableData[i].used_point = 0 
           this.tableData[i].total_point = 0

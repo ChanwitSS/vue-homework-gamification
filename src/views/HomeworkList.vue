@@ -27,12 +27,12 @@
 
     <div v-if="userRole === 'Student'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
-            <Card :homework="homework" :role="userRole"/>
+            <Card :homework="homework" :role="userRole" :user="user"/>
         </div>
     </div>
     <div v-if="userRole === 'Teacher'">
         <div v-for="(homework, index) in filterHomeworks" v-bind:key="index" class="card">
-            <Card :homework="homework" :role="userRole"/>
+            <Card :homework="homework" :role="userRole" :user="user"/>
         </div>
     </div>
   </div>
@@ -47,6 +47,7 @@ import HomeworkAssignForm from '../components/forms/HomeworkAssignForm.vue'
 import User from '../store/AuthUser'
 import CheckHomeworkForm from '../components/forms/CheckHomeworkForm.vue'
 import Axios from 'axios'
+import Auth from '../services/auth'
 
 export default {
     components: { Card, HomeworkSentForm, HomeworkAssignForm, CheckHomeworkForm },
@@ -70,12 +71,17 @@ export default {
         async filter() {
             let apiUrl = process.env.VUE_APP_API_HOST
             let res
-            console.log(this.user.id)
             if (this.userRole == 'Student') {
-                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_sent=0`)
+                res = await Axios.get(
+                    apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_sent=0`,
+                    Auth.getApiHeader
+                )
             } else if (this.userRole == 'Teacher') {
-                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_check=0`)
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_check=0`,
+                    Auth.getApiHeader
+                )
             }
+            console.log(res)
             this.filterHomeworks = res.data
         }
     }
