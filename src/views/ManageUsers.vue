@@ -1,14 +1,16 @@
 <template>
-  <Form></Form>
+  <div>
+    <user-table></user-table>
+    <Form></Form>
+  </div>
 </template>
 
 <script>
-import Form from "../components/forms/CreateUserForm.vue"
+import UserTable from "../components/board/userTable.vue";
+import Form from "../components/forms/EditUserForm.vue";
 export default {
-  components: { Form }
-}
+  components: { Form, UserTable },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
