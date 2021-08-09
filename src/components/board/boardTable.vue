@@ -1,10 +1,18 @@
 <template>
-  <div>
-    <el-radio-group v-model="radio">
+  <div class="board">
+      
+    <el-radio-group v-model="radio" >
       <el-radio-button label="receive">คะแนนที่ได้รับ</el-radio-button>
       <el-radio-button label="used">คะแนนที่ใช้</el-radio-button>
     </el-radio-group>
+<<<<<<< HEAD
     <el-popover placement="right" width="400" trigger="click" style="position: fixed; right: 5%">
+=======
+
+
+
+    <el-popover placement="right" width="400" trigger="click" style="position: fixed;margin-left:20px">
+>>>>>>> origin/peang
       <div align='center'>
         <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
         <br>
@@ -25,6 +33,7 @@
       "
       :default-sort="{ prop: 'total_point', order: 'descending' }"
       v-if="radio == 'receive'"
+      style="width:75%"
     >
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -33,13 +42,13 @@
         </template>
       </el-table-column>
       <el-table-column type="index"> </el-table-column>
-      <el-table-column label="ชื่อ" sortable prop="first_name">
+      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
       </el-table-column>
-      <el-table-column label="นามสกุล" sortable prop="last_name">
+      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
         </el-table-column>
-      <el-table-column label="คะแนนที่ได้รับ" sortable prop="total_point">
+      <el-table-column label="คะแนนที่ได้รับ" sortable prop="total_point" width="250">
       </el-table-column>
-      <el-table-column label="ID" sortable prop="id"></el-table-column>
+      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
     </el-table>
 
     <el-table
@@ -55,6 +64,8 @@
       "
       :default-sort="{ prop: 'total_point', order: 'descending' }"
       v-if="radio == 'used'"
+      style="width:75%"
+
     >
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -63,13 +74,13 @@
         </template>
       </el-table-column>
       <el-table-column type="index"> </el-table-column>
-      <el-table-column label="ชื่อ" sortable prop="first_name">
+      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
       </el-table-column>
-      <el-table-column label="นามสกุล" sortable prop="last_name">
+      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
       </el-table-column>
-      <el-table-column label="คะแนนที่ใช้" sortable prop="used_point">
+      <el-table-column label="คะแนนที่ใช้" sortable prop="used_point" width="250">
       </el-table-column>
-      <el-table-column label="ID" sortable prop="id"></el-table-column>
+      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -142,5 +153,11 @@ export default {
   position: fixed; /* or absolute */
   top: 20px;
   left: 10px;
+}
+
+.board{
+  margin-top: 30px;
+  margin-left: 150px;
+  width: 100%;
 }
 </style>

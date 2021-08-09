@@ -2,8 +2,8 @@
     <div class="bar">
         <div class="header_top">
             <!-- <h1 class="title">Homework</h1> -->
-            <h1 style="font-size:16pt;color:white"><b>{{user.first_name}}</b></h1>
-            <h1 style="font-size:16pt;color:white"><b>{{user.last_name}}</b></h1>
+            <h1 style="font-size:16pt;color:white"><b>{{user.first_name}} {{user.last_name}}</b></h1>
+            <h1 style="font-size:13pt;color:white" v-if="userRole == 'Student'">คะแนนคงเหลือ : {{user.left_point}}</h1>
         </div>
         
         <el-menu class="el-menu-vertical-demo" :popper-append-to-body="false">

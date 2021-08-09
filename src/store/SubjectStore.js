@@ -20,11 +20,22 @@ export default new Vuex.Store({
     add(state, res) {
       state.data.push(res.data);
     },
+    find(state, res) {
+      console.log(res)
+      state.data = res.data
+    },
   },
   actions: {
     async fetch({ commit }) {
       let res = await Axios.get(apiUrl + "/subjects");
       commit("fetch",res)
+    },
+    async find({ commit },id) {
+      // console.log("here");
+      console.log(apiUrl + '/subjects/'+id);
+      let res = await Axios.get(apiUrl + '/subjects/'+id)
+      console.log(res)
+      commit("find", res)
     },
     /*async add({commit},payload){
       let body = {
@@ -32,7 +43,7 @@ export default new Vuex.Store({
         point: payload.total_point,
         user: payload.user
       }
-      let res = await Axiost.post(apiUrl + '/subjects',body)
+      let res = await Axios.post(apiUrl + '/subjects',body)
       if(res.status === 200){
         commit("add",res)
       }
