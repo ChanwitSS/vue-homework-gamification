@@ -34,14 +34,12 @@
           <el-button
             size="mini"
             @click="routeItemPressed(scope.$index, scope.row)"
-            >Edit</el-button
-          >
+            >Edit</el-button>
           <el-button
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
-          >
+            >Delete</el-button>
         </template>
       </el-table-column>
     </template>

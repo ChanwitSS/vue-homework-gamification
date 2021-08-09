@@ -11,6 +11,7 @@ import Login from "../views/Login.vue";
 import RewardHistory from "../views/RewardHis"
 import RedeemRewards from "../views/RedeemRewards.vue";
 import CreateRewards from "../views/CreateReward.vue"
+import RegisterSubject from "../views/RegisterSubject.vue"
 
 
 
@@ -69,7 +70,13 @@ const routes = [
     path: "/rewards/redeem",
     name: "RedeemReward",
     component: RedeemRewards
+  },
+  {
+    path: "/RegisterSubject",
+    name: "RegisterSubject",
+    component: RegisterSubject
   }
+
 ];
 
 const router = new VueRouter({

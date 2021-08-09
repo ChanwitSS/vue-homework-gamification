@@ -42,6 +42,10 @@
                 <i class="el-icon-setting" style="color:black"></i>
                 <span slot="title">เพิ่มผู้ใช้งาน</span>
             </el-menu-item>
+            <el-menu-item index="8" @click="changeRounter('RegisterSubject')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+                <i class="el-icon-circle-plus-outline" style="color:black"></i>
+                <span slot="title">เพิ่มวิชาให้นักเรียน</span>
+            </el-menu-item>
             
             <el-submenu index="9">
                 <template slot="title">

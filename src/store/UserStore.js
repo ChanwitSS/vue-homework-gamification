@@ -62,6 +62,17 @@ export default new Vuex.Store({
         }
         let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
         commit("edit", { index: payload.index, res })
+      },
+      async addSub({ commit }, payload) {
+        let body = {
+          id: payload.id,
+          subject:[{
+            id: payload.subject_id
+          }]
+        //subject: payload.subject[0].id
+        }
+        let res = await Axios.put(apiUrl + '/users/' + payload.id, body)
+        commit("edit", { index: payload.index, res })
       }
     },
   modules: {
