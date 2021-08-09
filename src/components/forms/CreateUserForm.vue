@@ -1,28 +1,40 @@
 <template>
   <div>
-    <el-button type="success" style="margin:20px 20px 50px 1100px; right:20;" @click="onClickSave">บันทึก</el-button>
+    <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">จัดการผู้ใช้งาน</label>
+        </div>
+        <br>
+    </header>
+
+    <div class="create_form">
     <el-form label-width="100px" >
-        <el-form-item label="ชื่อ" >
+        <el-form-item label="ชื่อ" class="user_item">
             <el-input v-model="form.first_name"></el-input>
         </el-form-item>
-        <el-form-item label="นามสกุล" >
+        <el-form-item label="นามสกุล"  class="user_item">
             <el-input v-model="form.last_name"></el-input>
         </el-form-item>
-        <el-form-item label="ชื่อผู้ใช้" >
+        <el-form-item label="ชื่อผู้ใช้" class="user_item">
             <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="รหัสผ่าน">
+        <el-form-item label="รหัสผ่าน" class="user_item">
             <el-input type="password" v-model="form.password" ></el-input>
         </el-form-item>
-        <el-form-item label="อีเมล">
+        <el-form-item label="อีเมล" class="user_item">
             <el-input v-model="form.email"></el-input>
         </el-form-item>
-        <el-form-item label="บทบาท">
+        <el-form-item label="บทบาท" class="user_item">
             <el-select v-model="form.role" placeholder="บทบาท">
                 <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
         </el-form-item>
     </el-form>
+    <br><br>
+    <el-button type="success" style="margin-left:540px; right:20;" @click="onClickSave">บันทึก</el-button>
+    </div>
   </div>
 </template>
 
@@ -94,10 +106,14 @@ export default {
   height: 40px;
   display: inline-block;
 }
-.el-form-item {
+.user_item {
     margin-bottom: 22px;
     width: 500px;
     display: inline-block;
     margin: 15px;
+}
+.create_form{
+  margin-left: 120px;
+  margin-top:40px
 }
 </style>

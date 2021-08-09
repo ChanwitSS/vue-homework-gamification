@@ -1,20 +1,20 @@
 <template>
   <div class="move_form">
       <el-form label-width="100px" class="assign">
-        <el-form-item label="ชื่อการบ้าน">
+        <el-form-item label="ชื่อการบ้าน" class="hw_from">
           <el-input v-model="form.homework_name" placeholder="ชื่อการบ้าน" ></el-input>
         </el-form-item>
-        <el-form-item label="วิชา" >
-              <el-select v-model="form.subject" placeholder="ชื่อวิชา">
+        <el-form-item label="วิชา" class="hw_from">
+              <el-select v-model="form.subject" placeholder="ชื่อวิชา" >
                 <el-option v-for="item in subjects" :key="item.id" :label="item.subject_name" :value="item.id">
                 </el-option>
               </el-select>
         </el-form-item>
         <br><br>
-        <el-form-item label="คำอธิบาย" >
+        <el-form-item label="คำอธิบาย" class="hw_from">
           <el-input v-model="form.description" placeholder="คำอธิบาย"></el-input>
         </el-form-item>
-        <el-form-item label=กำหนดส่ง>
+        <el-form-item label=กำหนดส่ง class="hw_from">
           <v-date-picker v-model="form.due_date" >
             <template v-slot="{ inputValue, inputEvents }">
               <input
@@ -115,18 +115,25 @@ export default {
 
 <style>
 .assign{
-  margin-left: 130px;
+  margin-left: 200px;
   margin-top: 100px;
   
 
 }
 
 .addButton{
-    margin-left: 550px;
+    margin-left: 500px;
 }
 
 .move_form{
-    margin-left: 100px;
+    margin-left: 150px;
+}
+
+.hw_from{
+    margin-bottom: 22px;
+    width: 100;
+    display: inline-block;
+    margin: 15px;
 }
 
 </style>
