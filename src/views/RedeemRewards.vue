@@ -78,7 +78,7 @@ export default {
 
     position: absolute;
     right: 6%;
-    top: 6%;
+    top: 9%;
 
 }
 .headerName{

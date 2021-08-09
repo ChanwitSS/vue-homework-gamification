@@ -9,7 +9,8 @@
         <br>
     </header>
 
-  <HomeworkAssignForm/> 
+    <div class="assign_form"><HomeworkAssignForm/> </div>
+  
 </div>
 </template>
 
@@ -20,6 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang"scss">
+
 
 </style>

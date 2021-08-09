@@ -1,8 +1,8 @@
 <template>
-  <div>
-      <el-form label-width="100px" >
-        <el-form-item label="ชื่อการบ้าน" >
-          <el-input v-model="form.homework_name" placeholder="ชื่อการบ้าน"></el-input>
+  <div class="move_form">
+      <el-form label-width="100px" class="assign">
+        <el-form-item label="ชื่อการบ้าน">
+          <el-input v-model="form.homework_name" placeholder="ชื่อการบ้าน" ></el-input>
         </el-form-item>
         <el-form-item label="วิชา" >
               <el-select v-model="form.subject" placeholder="ชื่อวิชา">
@@ -10,6 +10,7 @@
                 </el-option>
               </el-select>
         </el-form-item>
+        <br><br>
         <el-form-item label="คำอธิบาย" >
           <el-input v-model="form.description" placeholder="คำอธิบาย"></el-input>
         </el-form-item>
@@ -27,8 +28,9 @@
           </v-date-picker>
         </el-form-item>
       </el-form>
+      <br><br>
       <div class="addButton" >
-        <el-button type="primary" round @click="onClickAdd">เพิ่มการบ้าน</el-button>
+        <el-button type="primary" round @click="onClickAdd" icon="el-icon-plus">เพิ่มการบ้าน</el-button>
       </div>
   </div>
 </template>
@@ -42,6 +44,7 @@ export default {
       data(){
         return {
           subjects: [],
+          user_subject:AuthUser.getters.user.subjects,
           form:{
             subject: null,
             homework_name: null,
@@ -59,8 +62,14 @@ export default {
   },
   methods:{
     async fetchSubject() {
-      await Subject.dispatch("fetch")
-      this.subjects = Subject.getters.subjects
+      console.log(this.user_subject);
+      for (let index = 0; index < this.user_subject.length; index++) {
+        console.log(this.user_subject[index].id);
+        await Subject.dispatch("find",this.user_subject[index].id)
+        let keep = Subject.getters.subjects
+        this.subjects.push(keep)   
+      }
+      
     },
     onClickAdd() {
       let payload = {
@@ -81,12 +90,23 @@ export default {
           message: 'สั่งการบ้านสำเร็จ'
         });
       Homework.dispatch("add", payload)
+      this.clearForm()
       }).catch(() => {
         this.$message({
           type: 'info',
           message: 'ยกเลิกสั่งการบ้าน'
         });          
       });
+      
+    },
+    clearForm(){
+      this.form={
+            subject: null,
+            homework_name: null,
+            description: null,
+            point: null,
+            due_date: null
+      }
     },
 
   }
@@ -94,12 +114,19 @@ export default {
 </script>
 
 <style>
-table{
-  margin-left: 50px;
+.assign{
+  margin-left: 130px;
+  margin-top: 100px;
+  
+
 }
 
 .addButton{
-    margin-left: 130px;
+    margin-left: 550px;
+}
+
+.move_form{
+    margin-left: 100px;
 }
 
 </style>

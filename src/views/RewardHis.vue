@@ -72,12 +72,12 @@ export default {
 .btn{
 
     position: absolute;
-    right: 0%;
-    top: 5%;
+    right: 6%;
+    top: 9%;
 
 }
 .headerName{
-  font-size: 5em;
+  font-size: 5.5em;
   font-family: TAGonNon;
   text-shadow: 1px 0.5px;
 

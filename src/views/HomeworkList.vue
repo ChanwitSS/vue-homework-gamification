@@ -6,11 +6,20 @@
         <el-button slot="reference" type="primary" icon="el-icon-circle-plus" round>สั่งการบ้าน</el-button>
     </el-popover>-->
 
-    <header class="top-head" style="text-align:center">
+    <header class="top-head" style="text-align:center" v-if="userRole === 'Teacher'">
         <br>
         <div class="cover-top"></div>
         <div>
             <label class="headerName">ตรวจการบ้าน</label>
+        </div>
+        <br>
+    </header>
+
+    <header class="top-head" style="text-align:center" v-if="userRole === 'Student'">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">ส่งการบ้าน</label>
         </div>
         <br>
     </header>
