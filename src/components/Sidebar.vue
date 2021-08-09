@@ -12,8 +12,8 @@
                 <span slot="title">การบ้าน</span>
             </el-menu-item>
             <el-menu-item index="2" @click="changeRounter('rewards/redeem')" v-if="userRole == 'Student'" :disabled="isDisabled">
-                <i class="el-icon-setting" style="color:black"></i>
-                <span slot="title">คะแนน - ประวัติการแลกรางวัล</span>
+                <i class="el-icon-present" style="color:black"></i>
+                <span slot="title">คะแนน - แลกรางวัล</span>
             </el-menu-item>
 
             <el-menu-item index="3" @click="changeRounter('homeworks')" v-if="userRole == 'Teacher'" :disabled="isDisabled">
@@ -26,7 +26,7 @@
             </el-menu-item>
 
 
-            <el-menu-item index="5" :disabled="isDisabled" @click="changeRounter('leaderboard')">
+            <el-menu-item index="5" :disabled="isDisabled" @click="changeRounter('leaderboard')" v-if="userRole == 'Admin'">
                 <i class="el-icon-medal-1" style="color:black"></i>
                 <span slot="title">กระดานคะแนน</span>
             </el-menu-item>

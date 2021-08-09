@@ -31,15 +31,14 @@ export default {
   },
     methods:{
       async checkPoint(rerward){
-        /*if (this.who.left_point >= rerward.reward_point) {
+        if (this.who.left_point >= rerward.reward_point) {
           this.changeCheck()
         } else if(rerward.reward_remain === 0){
           this.$message.error('ขออภัย ของรางวัลหมดแล้ว');
         }else if (this.who.left_point < rerward.reward_point) {
           // this.$message.error('คะแนนของคุณไม่เพียงพอ โปดเลือกใหม่อีกคร้ง');
           this.$message.error('คุณมีคะแนนเพียง '+ this.who.left_point +' คะแนน กรุณาเลือกใหม่อีกครั้ง');
-        }*/
-        this.changeCheck()
+        }
       },
         changeCheck(){
           if(this.check==1){

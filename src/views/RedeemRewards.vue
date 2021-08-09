@@ -13,7 +13,6 @@
     </header>
 
   <el-button class="btn" slot="reference" type="primary" icon="el-icon-receiving" round @click="changeRounter('rewardsHistory')">ประวัติการแลกรางวัล</el-button>
-
     <div>
         <el-row >
             <el-col :span="6" v-for="reward in rewards" v-bind:key="reward">
