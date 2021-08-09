@@ -10,15 +10,12 @@ import Login from "../views/Login.vue";
 import CreateUsers from "@/views/CreateUser.vue";
 import RewardHistory from "../views/RewardHis";
 import RedeemRewards from "../views/RedeemRewards.vue";
-<<<<<<< HEAD
 import CreateRewards from "../views/CreateReward.vue"
 import RegisterSubject from "../views/RegisterSubject.vue"
 
 
 
-=======
 import CreateRewards from "../views/CreateReward.vue";
->>>>>>> origin/Jerry
 
 Vue.use(VueRouter);
 
