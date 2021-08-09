@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       index: 0,
+      servedata: [],
       stateForm: "",
       clickedItem: {
         username: null,
@@ -73,6 +74,33 @@ export default {
       ],
     };
   },
+  created() {
+    this.fetch();
+  },
+  computed: {
+    checkEmail: function() {
+      for (let index = 0; index < this.servedata.length; index++) {
+        if (
+          this.servedata[index].email === this.clickedItem.email &&
+          this.servedata[index].id !== this.clickedItem.id
+        ) {
+          return true;
+        }
+      }
+      return false;
+    },
+    checkUsername: function() {
+      for (let index = 0; index < this.servedata.length; index++) {
+        if (
+          this.servedata[index].username === this.clickedItem.username &&
+          this.servedata[index].id !== this.clickedItem.id
+        ) {
+          return true;
+        }
+      }
+      return false;
+    },
+  },
   mounted() {
     EventBus.$on("route-data", (data) => {
       this.clearForm();
@@ -88,6 +116,10 @@ export default {
     });
   },
   methods: {
+    async fetch() {
+      await UserStore.dispatch("fetch");
+      this.servedata = UserStore.getters.users;
+    },
     getClickedItem(value) {
       this.clickedItem = value;
     },
@@ -109,35 +141,47 @@ export default {
       };
       console.log(payload.role);
       if (this.clickedItem.length !== 0) {
-        this.$confirm("ต้องการบันทึกข้อมูลหรือไม่", "คำเตือน", {
-          confirmButtonText: "ตกลง",
-          cancelButtonText: "ยกเลิก",
-          type: "warning",
-        })
-          .then(() => {
-            this.$message({
-              type: "success",
-              message: "บันทึกสำเร็จ",
-            });
-          })
-          .then(async () => {
-            this.clickedItem.role.name = this.stateForm;
-            if (payload.role.name === "Teacher") {
-              payload.role.id = 4;
-            } else if (payload.role.name === "Student") {
-              payload.role.id = 5;
-            }
-            await UserStore.dispatch("editUser", payload);
-            await EventBus.$emit("trans-data");
-            this.clearForm();
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "ยกเลิกบันทึก",
-            });
-            console.log(this.clickedItem.role.name);
+        if (this.checkEmail) {
+          this.$message({
+            type: "info",
+            message: "ชื่ออีเมลซ้ำ",
           });
+        } else if (this.checkUsername) {
+          this.$message({
+            type: "info",
+            message: "ชื่อผู้ใช้ซ้ำ",
+          });
+        } else {
+          this.$confirm("ต้องการบันทึกข้อมูลหรือไม่", "คำเตือน", {
+            confirmButtonText: "ตกลง",
+            cancelButtonText: "ยกเลิก",
+            type: "warning",
+          })
+            .then(() => {
+              this.$message({
+                type: "success",
+                message: "บันทึกสำเร็จ",
+              });
+            })
+            .then(async () => {
+              this.clickedItem.role.name = this.stateForm;
+              if (payload.role.name === "Teacher") {
+                payload.role.id = 4;
+              } else if (payload.role.name === "Student") {
+                payload.role.id = 5;
+              }
+              await UserStore.dispatch("editUser", payload);
+              await EventBus.$emit("trans-data");
+              this.clearForm();
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "ยกเลิกบันทึก",
+              });
+              console.log(this.clickedItem.role.name);
+            });
+        }
       } else {
         console.log(this.clickedItem);
         this.$message({

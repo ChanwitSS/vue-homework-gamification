@@ -34,6 +34,9 @@ export default new Vuex.Store({
       }
       state.data = new_data;
     },
+    add(state, res) {
+      state.data.push(res.data);
+    },
   },
   actions: {
     async fetch({ commit }) {
@@ -104,6 +107,10 @@ export default new Vuex.Store({
       let res = await Axios.delete(apiUrl + "/users/" + payload.id);
       console.log(res);
       commit("delete", res);
+    },
+    async addUser({ commit }, payload) {
+      let res = await Axios.post(apiUrl + "/users", payload);
+      commit("add", res);
     },
   },
   modules: {},

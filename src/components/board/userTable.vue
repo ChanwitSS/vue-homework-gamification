@@ -5,7 +5,9 @@
         tableData.filter(
           (data) =>
             !search ||
-            data.reward_name.toLowerCase().includes(search.toLowerCase())
+            data.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.user_ID.toString().includes(search)
         )
       "
       style="width: 100"
@@ -34,7 +36,7 @@
             <el-input
               v-model="search"
               size="mini"
-              placeholder="Type (ชื่อรางวัล) to search"
+              placeholder="Type to search"
             />
           </template>
           <template slot-scope="scope">
