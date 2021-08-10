@@ -20,6 +20,7 @@
       :default-sort="{ prop: 'total_point', order: 'descending' }"
       v-if="radio == 'exchange'"
       style="width:75%"
+      align="center"
     >
       <el-table-column type="expand">
         <template slot-scope="props">
