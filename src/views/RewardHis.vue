@@ -2,24 +2,14 @@
   <div class="board">
       
     <el-radio-group v-model="radio" >
-      <el-radio-button label="receive">คะแนนที่ได้รับ</el-radio-button>
-      <el-radio-button label="used">คะแนนที่ใช้</el-radio-button>
+      <el-radio-button label="use">ประวัติการใช้แต้ม</el-radio-button>
+      <el-radio-button label="exchange">ประวัติการแลก</el-radio-button>
     </el-radio-group>
 
-
-
-    <el-popover placement="right" width="400" trigger="click" style="position: fixed;margin-left:20px">
-      <div align='center'>
-        <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
-        <br>
-        <el-button style="margin-top: 20px" @click="onClickSelectRange">เลือก</el-button>
-      </div>
-      <el-button slot="reference">เลือกช่วงเวลา</el-button>
-    </el-popover>
     <el-table
       class="center"
       :data="
-        tableData.filter(
+        tableDataA.filter(
           (data) =>
             !search ||
             data.first_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -28,7 +18,7 @@
         )
       "
       :default-sort="{ prop: 'total_point', order: 'descending' }"
-      v-if="radio == 'receive'"
+      v-if="radio == 'exchange'"
       style="width:75%"
     >
       <el-table-column type="expand">
@@ -38,19 +28,16 @@
         </template>
       </el-table-column>
       <el-table-column type="index"> </el-table-column>
-      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
+      <el-table-column label="ชื่อของรางวัล" sortable prop="reward.reward_name">
       </el-table-column>
-      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
-        </el-table-column>
-      <el-table-column label="คะแนนที่ได้รับ" sortable prop="total_point" width="250">
+      <el-table-column label="ประวัติการแลกรางวัล" sortable prop="point">
       </el-table-column>
-      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
     </el-table>
 
     <el-table
       class="center"
       :data="
-        tableData.filter(
+        tableDataB.filter(
           (data) =>
             !search ||
             data.first_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -59,7 +46,7 @@
         )
       "
       :default-sort="{ prop: 'total_point', order: 'descending' }"
-      v-if="radio == 'used'"
+      v-if="radio == 'use'"
       style="width:75%"
 
     >
@@ -70,13 +57,10 @@
         </template>
       </el-table-column>
       <el-table-column type="index"> </el-table-column>
-      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
+      <el-table-column label="วันที่" sortable prop="created_at">
       </el-table-column>
-      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
+      <el-table-column label="คะแนน" sortable prop="point">
       </el-table-column>
-      <el-table-column label="คะแนนที่ใช้" sortable prop="used_point" width="250">
-      </el-table-column>
-      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -85,16 +69,16 @@
 import UserStore from "@/store/UserStore";
 import Axios from "axios"
 import moment from 'moment'
-import Auth from '../../services/auth'
+import Auth from '../services/auth'
 
 export default {
   data() {
     return {
       search: "",
-      tableData: [],
+      tableDataA: [],
+      tableDataB: [],
       range: null,
-      dialogFormVisible: false,
-      radio: 'receive',
+      radio: 'use',
     };
   },
   created() {
@@ -103,46 +87,17 @@ export default {
   methods: {
     async fetch() {
       await UserStore.dispatch("fetch");
-      console.log(UserStore.getters.users)
-      UserStore.getters.users.map((item, index) => {if (item.role.name == "Student") { this.tableData.push(item)}});
+      this.filter()
     },
-    onClickSelectRange() {
-      this.dateFilter()
-    },
-    async dateFilter() {
-      try {
-        let apiUrl = process.env.VUE_APP_API_HOST
-        let start = moment(this.range.start).subtract(7, 'hours').format('YYYY-MM-DD')
-        let end = moment(this.range.end).subtract(7, 'hours').format('YYYY-MM-DD')
-        let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
-        let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
-        for (let i=0; i<this.tableData.length; i++) {
-          this.tableData[i].used_point = 0 
-          this.tableData[i].total_point = 0
-          for (let j=0; j<student_homework_res.data.length; j++) {
-            if (student_homework_res.data[j].users_permissions_user.id == this.tableData[i].id) {
-              this.tableData[i].total_point += student_homework_res.data[j].point
-            }
-          }
-          for (let j=0; j<student_reward_res.data.length; j++) {
-            if (student_reward_res.data[j].users_permissions_user.id == this.tableData[i].id) {
-              this.tableData[i].used_point += student_reward_res.data[j].point
-            }
-          }
-        }
-      } catch {
-        this.$message({
-          showClose: true,
-          message: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
-          type: 'error'
-        });
-        return ;
-      }
-      this.$message({
-        showClose: true,
-        message: 'เลือกช่วงเวลาสำเร็จ',
-        type: 'success'
-      });
+    async filter() {
+      let apiUrl = process.env.VUE_APP_API_HOST
+      let id = JSON.parse(localStorage.getItem('auth_key')).user.id
+      let student_reward_res = await Axios.get(apiUrl + `/student-rewards?users_permissions_user=${id}`, Auth.getApiHeader)
+      let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user=${id}`, Auth.getApiHeader)
+
+      this.tableDataA = student_reward_res.data
+      this.tableDataB = student_homework_res.data
+      console.log(this.tableDataB)
     }
   },
 };

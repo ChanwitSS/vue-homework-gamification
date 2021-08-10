@@ -112,11 +112,10 @@ export default {
             type: "success",
             message: "Delete completed",
           });
-
+          await RewardStore.dispatch("delete", row);
+          this.fetch();
           // location.reload();
-        }).then( 
-          this.success()
-        )
+        })
         // .then(async () => {
         //   await this.fetch();
         // })
@@ -127,10 +126,9 @@ export default {
           });
         });
     },
-    async success() {
-      await UserStore.dispatch("delete", row);
-      this.fetch();
-    }
+    routeItemPressed(index, row) {
+      EventBus.$emit("route-data", { row, index });
+    },
   },
 };
 </script>

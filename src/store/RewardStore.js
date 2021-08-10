@@ -98,11 +98,12 @@ export default new Vuex.Store({
       };
       let res = await Axios.put(apiUrl + "/rewards/" + payload.id, body, Auth.getApiHeader);
       let index = payload.index;
-      commit("editR", { res, index });
+      commit("edit", { res, index });
     },
     async delete({ commit }, payload) {
       let res = await Axios.delete(apiUrl + "/rewards/" + payload.id, Auth.getApiHeader);
       commit("delete", res);
+      console.log(res.data)
     },
     async addReward({ commit }, payload) {
       let res = await Axios.post(apiUrl + "/rewards/", payload, Auth.getApiHeader);
