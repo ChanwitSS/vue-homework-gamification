@@ -1,86 +1,162 @@
 <template>
-<div>
-
-    <header class="top-head" style="text-align:center">
-      <br>
-      <div class="cover-top"></div>
-      <div>
-        <label class="headerName">ประวัติการแลกรางวัล</label> 
-      </div>
-    <br>
-    </header>
-
-
-    <el-button class="btn" slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards/redeem')" round>แลกรางวัล</el-button>
-    <div>
+  <div class="board">
       
-    </div>
+    <el-radio-group v-model="radio" >
+      <el-radio-button label="receive">คะแนนที่ได้รับ</el-radio-button>
+      <el-radio-button label="used">คะแนนที่ใช้</el-radio-button>
+    </el-radio-group>
 
-    <div>
-        <el-row >
-            <el-col :span="6" v-for="reward in rewards" v-bind:key="reward">
-                <RewardHistory :reward="reward" :who="who"/>
-            </el-col>
-        </el-row>
-    </div>
-</div>
 
-  
+
+    <el-popover placement="right" width="400" trigger="click" style="position: fixed;margin-left:20px">
+      <div align='center'>
+        <v-date-picker v-model="range" isRange style="margin-top: 20px" align="cneter"/>
+        <br>
+        <el-button style="margin-top: 20px" @click="onClickSelectRange">เลือก</el-button>
+      </div>
+      <el-button slot="reference">เลือกช่วงเวลา</el-button>
+    </el-popover>
+    <el-table
+      class="center"
+      :data="
+        tableData.filter(
+          (data) =>
+            !search ||
+            data.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.id === parseInt(search) || data.total_point === parseInt(search)
+        )
+      "
+      :default-sort="{ prop: 'total_point', order: 'descending' }"
+      v-if="radio == 'receive'"
+      style="width:75%"
+    >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>User ID: {{ props.row.user_ID }}</p>
+          <p>Email: {{ props.row.email }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column type="index"> </el-table-column>
+      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
+      </el-table-column>
+      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
+        </el-table-column>
+      <el-table-column label="คะแนนที่ได้รับ" sortable prop="total_point" width="250">
+      </el-table-column>
+      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
+    </el-table>
+
+    <el-table
+      class="center"
+      :data="
+        tableData.filter(
+          (data) =>
+            !search ||
+            data.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.id === parseInt(search) || data.total_point === parseInt(search)
+        )
+      "
+      :default-sort="{ prop: 'total_point', order: 'descending' }"
+      v-if="radio == 'used'"
+      style="width:75%"
+
+    >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>User ID: {{ props.row.user_ID }}</p>
+          <p>Email: {{ props.row.email }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column type="index"> </el-table-column>
+      <el-table-column label="ชื่อ" sortable prop="first_name" width="250">
+      </el-table-column>
+      <el-table-column label="นามสกุล" sortable prop="last_name" width="250">
+      </el-table-column>
+      <el-table-column label="คะแนนที่ใช้" sortable prop="used_point" width="250">
+      </el-table-column>
+      <el-table-column label="ID" sortable prop="id" width="250"></el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
+import UserStore from "@/store/UserStore";
+import Axios from "axios"
+import moment from 'moment'
+import Auth from '../../services/auth'
 
-import RewardStore from "../store/RewardStore"
-import RewardHistory from "../components/cards/RewardHistory.vue"
-import AuthUser from "../store/AuthUser"
 export default {
-    components: {RewardHistory},
-  data(){
-    return{
-      rewards:[],
-      check:1,
-      who:[]
-    }
-  },  
+  data() {
+    return {
+      search: "",
+      tableData: [],
+      range: null,
+      dialogFormVisible: false,
+      radio: 'receive',
+    };
+  },
   created() {
-        this.fetch()
+    this.fetch();
+  },
+  methods: {
+    async fetch() {
+      await UserStore.dispatch("fetch");
+      console.log(UserStore.getters.users)
+      UserStore.getters.users.map((item, index) => {if (item.role.name == "Student") { this.tableData.push(item)}});
     },
-    methods:{
-        async fetch() {
-          this.who = AuthUser.getters.user
-
-          await RewardStore.dispatch("fetch")
-          this.rewards = RewardStore.getters.rewards
-          let arr = []
-
-
-          for (let index = 0; index < this.who.rewards.length; index++) {
-            await RewardStore.dispatch("find",this.who.rewards[index].id)
-            let keep = RewardStore.getters.rewards
-            arr.push(keep)
-          }          
-        },
-        changeRounter(route) {
-          this.$router.push(`/${route}`)
+    onClickSelectRange() {
+      this.dateFilter()
+    },
+    async dateFilter() {
+      try {
+        let apiUrl = process.env.VUE_APP_API_HOST
+        let start = moment(this.range.start).subtract(7, 'hours').format('YYYY-MM-DD')
+        let end = moment(this.range.end).subtract(7, 'hours').format('YYYY-MM-DD')
+        let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
+        let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
+        for (let i=0; i<this.tableData.length; i++) {
+          this.tableData[i].used_point = 0 
+          this.tableData[i].total_point = 0
+          for (let j=0; j<student_homework_res.data.length; j++) {
+            if (student_homework_res.data[j].users_permissions_user.id == this.tableData[i].id) {
+              this.tableData[i].total_point += student_homework_res.data[j].point
+            }
+          }
+          for (let j=0; j<student_reward_res.data.length; j++) {
+            if (student_reward_res.data[j].users_permissions_user.id == this.tableData[i].id) {
+              this.tableData[i].used_point += student_reward_res.data[j].point
+            }
+          }
         }
+      } catch {
+        this.$message({
+          showClose: true,
+          message: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+          type: 'error'
+        });
+        return ;
+      }
+      this.$message({
+        showClose: true,
+        message: 'เลือกช่วงเวลาสำเร็จ',
+        type: 'success'
+      });
     }
-}
-
+  },
+};
 </script>
-
-<style scoped lang="scss">
-.btn{
-
-    position: absolute;
-    right: 6%;
-    top: 9%;
-
-}
-.headerName{
-  font-size: 5.5em;
-  font-family: TAGonNon;
-  text-shadow: 1px 0.5px;
-
+<style>
+.center {
+  position: fixed; /* or absolute */
+  top: 20px;
+  left: 10px;
 }
 
+.board{
+  margin-top: 30px;
+  margin-left: 150px;
+  width: 100%;
+}
 </style>
