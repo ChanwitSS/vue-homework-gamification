@@ -7,23 +7,23 @@
           data.reward_name.toLowerCase().includes(search.toLowerCase())
       )
     "
-    style="width: 100"
+    style="width: 96%"
   >
-    <template slot-scope="scope">
-      <el-table-column type="index" width="50"> </el-table-column>
-      <el-table-column label="ชื่อรางวัล" prop="reward_name" width="120">
+    <template >
+      <el-table-column type="index" width="60"> </el-table-column>
+      <el-table-column label="ชื่อรางวัล" prop="reward_name" width="175">
       </el-table-column>
-      <el-table-column label="แต้มรางวัลที่ใช้" prop="reward_point" width="120">
+      <el-table-column label="แต้มรางวัลที่ใช้" prop="reward_point" width="140">
       </el-table-column>
-      <el-table-column label="เหลือรางวัล" prop="reward_remain" width="120">
+      <el-table-column label="เหลือรางวัล" prop="reward_remain" width="140">
       </el-table-column>
-      <el-table-column label="วันที่สร้าง" prop="created_at" width="130">
+      <el-table-column label="วันที่สร้าง" prop="created_at" width="250">
       </el-table-column>
-      <el-table-column label="วันที่แก้ไข" prop="updated_at" width="126">
+      <el-table-column label="วันที่แก้ไข" prop="updated_at" width="220">
       </el-table-column>
 
-      <el-table-column align="right" width="360">
-        <template slot="header" slot-scope="scope">
+      <el-table-column align="right" width="300">
+        <template slot="header" >
           <el-input
             v-model="search"
             size="mini"
@@ -34,14 +34,12 @@
           <el-button
             size="mini"
             @click="routeItemPressed(scope.$index, scope.row)"
-            >Edit</el-button
-          >
+            >Edit</el-button>
           <el-button
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
-          >
+            >Delete</el-button>
         </template>
       </el-table-column>
     </template>
@@ -84,11 +82,11 @@ export default {
     },
     async handleDelete(index, row) {
       this.$confirm(
-        "This will permanently delete the file. Continue?",
-        "Warning",
+        "ยืนยันการลบรางวัล",
+        "",
         {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
+          confirmButtonText: "ตกลง",
+          cancelButtonText: "ยกเลิก",
           type: "warning",
           center: true,
         }
@@ -96,7 +94,7 @@ export default {
         .then(async () => {
           this.$notify({
             type: "success",
-            message: "Delete completed",
+            message: "ลบรางวัลสำเร็จ",
           });
           await RewardStore.dispatch("delete", row);
           this.fetch();
@@ -108,7 +106,7 @@ export default {
         .catch(() => {
           this.$notify({
             type: "info",
-            message: "Delete canceled",
+            message: "ยกเลิกการลบรางวัล",
           });
         });
     },

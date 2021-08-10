@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import Auth from '../services/auth'
 
 let apiUrl = process.env.VUE_APP_API_HOST;
 
@@ -29,22 +30,19 @@ export default new Vuex.Store({
     },
     add(state, res) {
       state.data.push(res.data);
-      console.log(state.data);
     },
     edit(state,{ index, res }){
       console.log(res)
-      state.data[index] = res.data
     },
   },
   actions: {
     async fetch({ commit }) {
       // console.log("here");
-      let res = await Axios.get(apiUrl + '/rewards')
+      let res = await Axios.get(apiUrl + '/rewards', Auth.getApiHeader)
       commit("fetch", res)
     },
     async find({ commit },id) {
-      let res = await Axios.get(apiUrl + '/rewards/'+id)
-      console.log(id)
+      let res = await Axios.get(apiUrl + '/rewards/'+ id, Auth.getApiHeader)
       commit("find", res)
     },
     /*async add({ commit }, payload) {
@@ -72,7 +70,7 @@ export default new Vuex.Store({
         users: payload.users
         //subject: payload.subject[0].id
       }
-      let res = await Axios.put(apiUrl + '/rewards/' + payload.id, body)
+      let res = await Axios.put(apiUrl + '/rewards/' + payload.id, body, Auth.getApiHeader)
       commit("edit", { index: payload.index, res })
     },
     async addRecord({ commit }, { userPayload, rewardPayload }) {
@@ -88,7 +86,7 @@ export default new Vuex.Store({
         reward: rewardBody.id,
         point: rewardBody.reward_point
       }
-      let res = await Axios.post(apiUrl + `/student-rewards`, body)
+      let res = await Axios.post(apiUrl + `/student-rewards`, body, Auth.getApiHeader)
     },
     async editReward({ commit }, payload) {
       let body = {
@@ -98,20 +96,16 @@ export default new Vuex.Store({
         users: payload.users,
         reward_point: payload.reward_point,
       };
-      console.log(body);
-      let res = await Axios.put(apiUrl + "/rewards/" + payload.id, body);
+      let res = await Axios.put(apiUrl + "/rewards/" + payload.id, body, Auth.getApiHeader);
       let index = payload.index;
-      console.log(res.data);
-      console.log(payload.index);
       commit("editR", { res, index });
     },
     async delete({ commit }, payload) {
-      let res = await Axios.delete(apiUrl + "/rewards/" + payload.id);
-      console.log(res)
+      let res = await Axios.delete(apiUrl + "/rewards/" + payload.id, Auth.getApiHeader);
       commit("delete", res);
     },
     async addReward({ commit }, payload) {
-      let res = await Axios.post(apiUrl + "/rewards/", payload);
+      let res = await Axios.post(apiUrl + "/rewards/", payload, Auth.getApiHeader);
       commit("add", res.data);
     },
   },

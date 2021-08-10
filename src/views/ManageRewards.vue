@@ -1,9 +1,17 @@
-<<<<<<< HEAD
 <template>
-  <div class="">
-    <admin-reward-table></admin-reward-table>
-    <reward-edit></reward-edit>
-    <el-button type="primary" icon="el-icon-plus" circle @click="changeRounter('rewards/create')" ></el-button>
+  <div>
+    <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">จัดการรางวัล</label>
+        </div>
+        <br>
+    </header>
+
+    <div class=""><reward-edit></reward-edit></div>
+    <div class="reward_table"><admin-reward-table></admin-reward-table></div>
+    <el-button type="primary" icon="el-icon-plus" round @click="changeRounter('rewards/create')" class="btn">เพิ่มรางวัล</el-button>
   </div>
 </template>
 
@@ -20,6 +28,18 @@ export default {
 };
 </script>
 
-<style></style>
-=======
->>>>>>> origin/peang
+<style scoped lang="scss">
+.reward_table{
+  margin-left: 60px;
+  margin-top: 20px;
+}
+
+.btn{
+
+    position: absolute;
+    right: 6%;
+    top: 9%;
+
+}
+
+</style>

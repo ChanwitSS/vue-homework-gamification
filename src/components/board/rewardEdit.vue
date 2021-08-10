@@ -1,35 +1,35 @@
 <template>
-  <div @editItem="getClickedItem">
+  <div @editItem="getClickedItem" class="edit_reward">
     <el-form
-      :model="ruleForm"
-      status-icon
-      ref="ruleForm"
-      label-width="120px"
-      class="demo-ruleForm"
+      :inline="true" class="demo-form-inline"
       @editItem="getClickedItem"
+      style="width:100%;"
     >
-      <el-form-item label="ชื่อรางวัล" prop="reward_name">
+      <el-form-item label="ชื่อรางวัล" prop="reward_name" class="manage">
         <el-input
           type="text"
           v-model="clickedItem.reward_name"
           autocomplete="off"
+          size="small"
+          style="width:250px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="แต้มรางวัลที่ใช้" prop="reward_point">
+      <el-form-item label="แต้มรางวัลที่ใช้" prop="reward_point" class="manage">
         <el-input
           type="text"
           v-model.number="clickedItem.reward_point"
           autocomplete="off"
+          size="small"
+          style="width:100px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="เหลือรางวัล" prop="reward_remain">
-        <el-input v-model.number="clickedItem.reward_remain"></el-input>
+      <el-form-item label="เหลือรางวัล" prop="reward_remain" class="manage">
+        <el-input v-model.number="clickedItem.reward_remain" size="small" style="width:100px"></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('clickedItem')"
-          >Update</el-button
+      <el-form-item class="manage" style="margin-left:100px">
+        <el-button type="primary" @click="submitForm('clickedItem')" size="small" style="width:80px">Update</el-button
         >
-        <el-button @click="resetForm('clickedItem')">Reset</el-button>
+        <el-button @click="resetForm('clickedItem')" size="small" style="width:80px">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -95,18 +95,18 @@ export default {
             reward_point: this.clickedItem.reward_point,
           };
           this.$confirm(
-            "This will permanently Change the file. Continue?",
-            "Warning",
+            "ยืนยันการลบรางวัล",
+            "",
             {
-              confirmButtonText: "OK",
-              cancelButtonText: "Cancel",
+              confirmButtonText: "ตกลง",
+              cancelButtonText: "ยกเลิก",
               type: "warning",
             }
           )
             .then(() => {
               this.$notify({
                 type: "success",
-                message: "Change completed",
+                message: "แก้ไขรางวัลสำเร็จ",
               });
             })
             .then(async () => {
@@ -117,19 +117,19 @@ export default {
             .catch(() => {
               this.$notify.info({
                 type: "info",
-                message: "Change canceled",
+                message: "ยกเลิกการแก้ไขรางวัล",
               });
             });
         } else {
           this.$notify.info({
             title: "Info",
-            message: "You did not change some thing",
+            message: "โปรดกรอกข้อมูลที่ต้องการเปลี่ยน",
           });
         }
       } else {
         this.$notify.info({
           title: "Info",
-          message: "Please select row to edit",
+          message: "โปรดเลือกข้อมูลที่ต้องการเปลี่ยน",
         });
       }
     },
@@ -142,4 +142,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.edit_reward{
+  margin-top: 20px;
+  margin-left: 60px;
+  width: 92%;
+  background-color: rgb(188, 226, 233);
+}
+.manage{
+  padding-left: 40px;
+  margin: 20px;
+}
+</style>

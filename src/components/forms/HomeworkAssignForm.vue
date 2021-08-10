@@ -1,20 +1,21 @@
 <template>
-  <div>
-      <el-form label-width="100px" >
-        <el-form-item label="ชื่อการบ้าน" >
-          <el-input v-model="form.homework_name" placeholder="ชื่อการบ้าน"></el-input>
+  <div class="move_form">
+      <el-form label-width="100px" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm" style="margin-left: 200px;margin-top: 100px;">
+        <el-form-item label="ชื่อการบ้าน" prop="homework_name" class="hw_from">
+          <el-input v-model="ruleForm.homework_name" placeholder="ชื่อการบ้าน" ></el-input>
         </el-form-item>
-        <el-form-item label="วิชา" >
-              <el-select v-model="form.subject" placeholder="ชื่อวิชา">
+        <el-form-item label="วิชา" prop="subject" class="hw_from">
+              <el-select v-model="ruleForm.subject" placeholder="ชื่อวิชา" >
                 <el-option v-for="item in subjects" :key="item.id" :label="item.subject_name" :value="item.id">
                 </el-option>
               </el-select>
         </el-form-item>
-        <el-form-item label="คำอธิบาย" >
-          <el-input v-model="form.description" placeholder="คำอธิบาย"></el-input>
+        <br><br>
+        <el-form-item label="คำอธิบาย" prop="description" class="hw_from">
+          <el-input v-model="ruleForm.description" placeholder="คำอธิบาย"></el-input>
         </el-form-item>
-        <el-form-item label=กำหนดส่ง>
-          <v-date-picker v-model="form.due_date" >
+        <el-form-item label=กำหนดส่ง prop="due_date" class="hw_from">
+          <v-date-picker v-model="ruleForm.due_date" >
             <template v-slot="{ inputValue, inputEvents }">
               <input
                 class="bg-white border px-2 py-1 rounded"
@@ -27,8 +28,9 @@
           </v-date-picker>
         </el-form-item>
       </el-form>
+      <br><br>
       <div class="addButton" >
-        <el-button type="primary" round @click="onClickAdd">เพิ่มการบ้าน</el-button>
+        <el-button type="primary" round @click="onClickAdd('ruleForm')" icon="el-icon-plus">เพิ่มการบ้าน</el-button>
       </div>
   </div>
 </template>
@@ -42,51 +44,96 @@ export default {
       data(){
         return {
           subjects: [],
-          form:{
-            subject: null,
-            homework_name: null,
-            description: null,
-            point: null,
-            due_date: null,
-          }
+          user_subject:AuthUser.getters.user.subjects,
+          ruleForm:{
+            subject: "",
+            homework_name: "",
+            description: "",
+            point: "",
+            due_date: "",
+          },
+          rules: {
+            subject: [
+              { required: true, message: 'กรุณาเลือกวิชา', trigger: 'blur' },
+            ],
+            homework_name: [
+              { required: true, message: 'กรุณาใส่ชื่อการบ้าน', trigger: 'blur' }
+            ],
+            description: [
+              {required: true, message: 'กรุณาใส่คำอธิบาย', trigger: 'blur' }
+            ],
+            due_date: [
+              {type: 'date',required: true, message: 'กรุณากำหนดส่ง', trigger: 'change'  }
+            ],
+
+          },
         }
     },
     props: {
     homework: null
   },
+    
   created() {
     this.fetchSubject()
   },
   methods:{
     async fetchSubject() {
-      await Subject.dispatch("fetch")
-      this.subjects = Subject.getters.subjects
-    },
-    onClickAdd() {
-      let payload = {
-        subject: this.form.subject,
-        homework_name: this.form.homework_name,
-        description: this.form.description,
-        point: this.form.point,
-        due_date: this.form.due_date,
+      console.log(this.user_subject);
+      for (let index = 0; index < this.user_subject.length; index++) {
+        console.log(this.user_subject[index].id);
+        await Subject.dispatch("find",this.user_subject[index].id)
+        let keep = Subject.getters.subjects
+        this.subjects.push(keep)   
       }
       
-      this.$confirm('สั่งการบ้าน', {
+    },
+    onClickAdd(formName) {
+      let payload = {
+        subject: this.ruleForm.subject,
+        homework_name: this.ruleForm.homework_name,
+        description: this.ruleForm.description,
+        point: this.ruleForm.point,
+        due_date: this.ruleForm.due_date,
+      }
+
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$confirm('สั่งการบ้าน', {
         confirmButtonText: 'ตกลง',
         cancelButtonText: 'ยกเลิก',
         type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: 'สั่งการบ้านสำเร็จ'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'สั่งการบ้านสำเร็จ'
+          });
+        Homework.dispatch("add", payload)
+        this.$refs[formName].resetFields(); 
+        // this.clearForm()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'ยกเลิกสั่งการบ้าน'
+          });          
+          this.$refs[formName].resetFields(); 
         });
-      Homework.dispatch("add", payload)
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'ยกเลิกสั่งการบ้าน'
-        });          
-      });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      
+      
+      
+    },
+    clearForm(){
+      this.ruleForm={
+            subject: "",
+            homework_name: "",
+            description: "",
+            point: "",
+            due_date: ""
+      }
     },
 
   }
@@ -94,12 +141,26 @@ export default {
 </script>
 
 <style>
-table{
-  margin-left: 50px;
+.assign{
+  margin-left: 200px;
+  margin-top: 100px;
+  
+
 }
 
 .addButton{
-    margin-left: 130px;
+    margin-left: 500px;
+}
+
+.move_form{
+    margin-left: 150px;
+}
+
+.hw_from{
+    margin-bottom: 22px;
+    width: 100;
+    display: inline-block;
+    margin: 15px;
 }
 
 </style>

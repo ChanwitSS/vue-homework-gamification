@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import Auth from '../services/auth'
 
 Vue.use(Vuex)
 
@@ -27,7 +28,7 @@ export default new Vuex.Store({
   },
   actions: {
     async fetch({ commit }) {
-      let res = await Axios.get(apiUrl + '/homeworks')
+      let res = await Axios.get(apiUrl + '/homeworks', Auth.getApiHeader)
       commit("fetch", res)
     },
     async add({ commit }, payload) {
@@ -38,33 +39,28 @@ export default new Vuex.Store({
         subject: payload.subject
       }
       //add homework
-      let res = await Axios.post(apiUrl + '/homeworks', body)
+      let res = await Axios.post(apiUrl + '/homeworks', body, Auth.getApiHeader)
       if (res.status === 200) {
         commit("add", res)
       } else {
         console.error(res)
       }
       //get students by subject_id
-      let students_res = await Axios.get(apiUrl + `/users?role=5&subjects=${body.subject}`)
+      let students_res = await Axios.get(apiUrl + `/users?role=5&subjects=${body.subject}`, Auth.getApiHeader)
       console.log(student_res)
       //set homework to each student
-      let student_homework_body = {
-        
-      }
       for (let i=0; i<students_res.data.length; i++) {
-        let res = await Axios.post(apiUrl + `/student-homeworks`, {
+        let student_homework_body = {
           users_permissions_user: students_res.data[i].id,
           homework: body,
           is_check: false,
           is_sent: false
-        })
-        console.log(res)
+        }
+        let res = await Axios.post(apiUrl + `/student-homeworks`, student_homework_body, Auth.getApiHeader)
       }
   },
   async find({ commit },id) {
-    // console.log("here");
-    console.log(apiUrl + '/homeworks/'+id);
-    let res = await Axios.get(apiUrl + '/homeworks/'+id)
+    let res = await Axios.get(apiUrl + '/homeworks/'+ id, Auth.getApiHeader)
     console.log(res)
     commit("find", res)
   },
@@ -76,7 +72,7 @@ export default new Vuex.Store({
           point: payload.point,
           //subject: payload.subject[0].id
       }
-      let res = await Axios.put(apiUrl + '/homeworks/' + payload.id, body)
+      let res = await Axios.put(apiUrl + '/homeworks/' + payload.id, body, Auth.getApiHeader)
       commit("edit", payload.index, res.data )
     }
   },

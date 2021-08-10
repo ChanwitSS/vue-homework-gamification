@@ -5,29 +5,31 @@
       status-icon
       :rules="rules"
       ref="ruleForm"
-      label-width="120px"
+      label-width="150px"
       class="demo-ruleForm"
+      style="width:120px;margin-left:400px;margin-top:60px"
     >
-      <el-form-item label="Reward name" prop="reward_name">
+      <el-form-item label="ชื่อรางวัล" prop="reward_name" class="create_reward">
         <el-input
           type="text"
           v-model="ruleForm.reward_name"
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Reward Remain" prop="reward_remain">
+      
+      <el-form-item label="เหลือรางวัล" prop="reward_remain" class="create_reward">
         <el-input
           v-model.number="ruleForm.reward_remain"
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Reward Point" prop="reward_point">
+      
+      <el-form-item label="แต้มรางวัลที่ใช้" prop="reward_point" class="create_reward">
         <el-input v-model.number="ruleForm.reward_point"></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >Submit</el-button
-        >
+      
+      <el-form-item style="margin-left:80px" class="create_reward">
+        <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
         <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
@@ -83,18 +85,18 @@ export default {
         this.ruleForm.reward_remain !== ""
       ) {
         this.$confirm(
-          "This will permanently Create the file. Continue?",
-          "Warning",
+          "ยืนยันการสร้างรางวัล",
+          "",
           {
-            confirmButtonText: "OK",
-            cancelButtonText: "Cancel",
+            confirmButtonText: "ตกลง",
+            cancelButtonText: "ยกเลิก",
             type: "warning",
           }
         )
           .then(() => {
             this.$notify({
               type: "success",
-              message: "Create completed",
+              message: "สร้างรางวัลสำเร็ข",
             });
           })
           .then(() => {
@@ -104,14 +106,14 @@ export default {
           .catch(() => {
             this.$notify({
               type: "info",
-              message: "Create canceled",
+              message: "ยกเลิกการสร้างรางวัล",
             });
           });
       }
       else{
            this.$notify({
               type: "info",
-              message: "Please complete the form",
+              message: "โปรดกรอกข้อมูล",
             });
       }
     },
@@ -121,3 +123,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.create_reward{
+    width: 450px;
+    display: inline-block;
+    margin: 15px;
+}
+
+</style>

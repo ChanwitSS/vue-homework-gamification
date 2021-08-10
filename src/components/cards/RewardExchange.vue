@@ -30,16 +30,15 @@ export default {
     who: []
   },
     methods:{
-      async checkPoint(rerward){
-        /*if (this.who.left_point >= rerward.reward_point) {
+      async checkPoint(reward){
+        if (this.who.left_point >= reward.reward_point) {
           this.changeCheck()
-        } else if(rerward.reward_remain === 0){
+        } else if(reward.reward_remain === 0){
           this.$message.error('ขออภัย ของรางวัลหมดแล้ว');
-        }else if (this.who.left_point < rerward.reward_point) {
+        }else if (this.who.left_point < reward.reward_point) {
           // this.$message.error('คะแนนของคุณไม่เพียงพอ โปดเลือกใหม่อีกคร้ง');
           this.$message.error('คุณมีคะแนนเพียง '+ this.who.left_point +' คะแนน กรุณาเลือกใหม่อีกครั้ง');
-        }*/
-        this.changeCheck()
+        }
       },
         changeCheck(){
           if(this.check==1){
@@ -51,15 +50,16 @@ export default {
 
         },
         async exchange(r){
-          await this.$message({
-            message: 'แลกของรางวัลสำเร็จ ตอนนี้คุณเหลือ'+this.who.left_point+' คะแนน ',
-            type: 'success'
-          });
           r.reward_remain--
           console.log("remain : "+r.reward_remain);
           let payload = r
           this.who.left_point -= r.reward_point
           this.who.used_point += r.reward_point
+
+          await this.$message({
+            message: 'แลกของรางวัลสำเร็จ ตอนนี้คุณเหลือ '+this.who.left_point+' คะแนน ',
+            type: 'success'
+          });
 
           UserStore.dispatch("edit",this.who)
           payload.users.push(this.who)

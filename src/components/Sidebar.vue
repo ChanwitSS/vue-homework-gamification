@@ -2,8 +2,8 @@
     <div class="bar">
         <div class="header_top">
             <!-- <h1 class="title">Homework</h1> -->
-            <h1 style="font-size:16pt;color:white"><b>{{user.first_name}}</b></h1>
-            <h1 style="font-size:16pt;color:white"><b>{{user.last_name}}</b></h1>
+            <h1 style="font-size:16pt;color:white"><b>{{user.first_name}} {{user.last_name}}</b></h1>
+            <h1 style="font-size:13pt;color:white" v-if="userRole == 'Student'">คะแนนคงเหลือ : {{user.left_point}}</h1>
         </div>
         
         <el-menu class="el-menu-vertical-demo" :popper-append-to-body="false">
@@ -12,8 +12,8 @@
                 <span slot="title">การบ้าน</span>
             </el-menu-item>
             <el-menu-item index="2" @click="changeRounter('rewards/redeem')" v-if="userRole == 'Student'" :disabled="isDisabled">
-                <i class="el-icon-setting" style="color:black"></i>
-                <span slot="title">คะแนน - ประวัติการแลกรางวัล</span>
+                <i class="el-icon-present" style="color:black"></i>
+                <span slot="title">คะแนน - แลกรางวัล</span>
             </el-menu-item>
 
             <el-menu-item index="3" @click="changeRounter('homeworks')" v-if="userRole == 'Teacher'" :disabled="isDisabled">
@@ -26,7 +26,7 @@
             </el-menu-item>
 
 
-            <el-menu-item index="5" :disabled="isDisabled" @click="changeRounter('leaderboard')">
+            <el-menu-item index="5" :disabled="isDisabled" @click="changeRounter('leaderboard')" v-if="userRole == 'Admin'">
                 <i class="el-icon-medal-1" style="color:black"></i>
                 <span slot="title">กระดานคะแนน</span>
             </el-menu-item>
@@ -41,6 +41,10 @@
             <el-menu-item index="8" @click="changeRounter('users/create')" v-if="userRole == 'Admin'" :disabled="isDisabled">
                 <i class="el-icon-setting" style="color:black"></i>
                 <span slot="title">เพิ่มผู้ใช้งาน</span>
+            </el-menu-item>
+            <el-menu-item index="8" @click="changeRounter('RegisterSubject')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+                <i class="el-icon-circle-plus-outline" style="color:black"></i>
+                <span slot="title">เพิ่มวิชาให้นักเรียน</span>
             </el-menu-item>
             
             <el-submenu index="9">

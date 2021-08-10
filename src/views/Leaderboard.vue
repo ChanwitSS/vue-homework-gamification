@@ -1,13 +1,21 @@
 <template>
   <div>
-    <BoardTable/>
+    <header class="top-head" style="text-align:center">
+        <br>
+        <div class="cover-top"></div>
+        <div>
+            <label class="headerName">กระดานคะแนน</label>
+        </div>
+        <br>
+    </header>
+    <boardTable></boardTable>
   </div>
 </template>
 
 <script>
-import BoardTable from "@/components/board/BoardTable.vue";
+import boardTable from "@/components/board/boardTable.vue";
 export default {
-  components: { BoardTable, },
+  components: { boardTable, },
   data() {
     return {
     }
