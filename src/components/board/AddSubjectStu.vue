@@ -130,7 +130,7 @@ export default {
           }]
       }
         
-        Axios.put (apiUrl + '/subjects/'+this.sub.id, body, Auth.getApiHeader)
+        await Axios.put (apiUrl + '/subjects/'+this.sub.id, body, Auth.getApiHeader)
 
         this.chooseSubject = "เลือกวิชา"
         this.keep.first_name =""

@@ -112,11 +112,12 @@ export default {
             type: "success",
             message: "Delete completed",
           });
-
           // location.reload();
-        }).then( 
-          this.success()
-        )
+        })
+        .then(async () => {
+          await UserStore.dispatch("delete", row);
+          this.fetch();
+        })
         // .then(async () => {
         //   await this.fetch();
         // })
@@ -127,10 +128,10 @@ export default {
           });
         });
     },
-    async success() {
-      await UserStore.dispatch("delete", row);
-      this.fetch();
-    }
+    // async success(row) {
+    //   await UserStore.dispatch("delete", row);
+    //   this.fetch();
+    // },
   },
 };
 </script>

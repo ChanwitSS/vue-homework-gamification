@@ -41,8 +41,10 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <br><br>
-    <el-button type="success" style=";" @click="onClickSave('ruleForm')">บันทึก</el-button>
+    <br /><br />
+    <el-button type="success" style=";" @click="onClickSave('ruleForm')"
+      >บันทึก</el-button
+    >
   </div>
 </template>
 <script>
@@ -167,6 +169,21 @@ export default {
       };
     },
     async onClickSave(formName) {
+      let payload = {
+        username: this.form.username,
+        password: this.form.password,
+        first_name: this.form.first_name,
+        last_name: this.form.last_name,
+        email: this.form.email,
+        user_ID: this.form.user_ID,
+        role: this.form.role,
+      };
+      if (this.form.role === "Student") {
+        payload.role = 5;
+      } else if (this.form.role === "Teacher") {
+        payload.role = 4;
+      }
+      console.log(payload);
       if (this.checkAllState) {
         if (this.checkEmail) {
           this.$message(statefunction.statusMessage("info", "email ซ้ำ"));
@@ -191,7 +208,7 @@ export default {
               });
             })
             .then(async () => {
-              await UserStore.dispatch("addUser", this.form);
+              await UserStore.dispatch("addUser", payload);
               this.clearForm();
             })
             .catch(() => {
