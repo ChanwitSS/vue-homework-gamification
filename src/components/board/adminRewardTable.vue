@@ -82,11 +82,11 @@ export default {
     },
     async handleDelete(index, row) {
       this.$confirm(
-        "This will permanently delete the file. Continue?",
-        "Warning",
+        "ยืนยันการลบรางวัล",
+        "",
         {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
+          confirmButtonText: "ตกลง",
+          cancelButtonText: "ยกเลิก",
           type: "warning",
           center: true,
         }
@@ -94,7 +94,7 @@ export default {
         .then(async () => {
           this.$notify({
             type: "success",
-            message: "Delete completed",
+            message: "ลบรางวัลสำเร็จ",
           });
           await RewardStore.dispatch("delete", row);
           this.fetch();
@@ -106,7 +106,7 @@ export default {
         .catch(() => {
           this.$notify({
             type: "info",
-            message: "Delete canceled",
+            message: "ยกเลิกการลบรางวัล",
           });
         });
     },

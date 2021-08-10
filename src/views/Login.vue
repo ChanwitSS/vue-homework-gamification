@@ -1,46 +1,44 @@
 <template>
   <div id="login">
+    <!-- <el-card class="box-card2" style="background: linear-gradient(to right, #409EFF 0%, #409EFF 35%, #FFFFFF 35%, #FFFFFF 100%);"> -->
   <el-card class="box-card2">
-    <el-form label-width="10px" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+
+      <!-- <img src="../assets/homework.png" class="logo"/> -->
+      <!-- <div id="welcome"> -->
+        <!-- <h1>ยินดีต้อนรับสู่โลกที่จะทำให้คุณสนุกกับการบ้าน</h1> -->
+      <!-- </div> -->
+      
       <div class="right-form">
         <div id="login-form">
           <h2 class="text-1">เข้าสู่ระบบ</h2>
-            <el-form-item class="login_field" prop="username">Username or Email
-            <el-input placeholder="Username" v-model="ruleForm.username" style="margin-top: 10px;"/>
-            </el-form-item>
-            <el-form-item class="login_field" prop="password">Password
-            <el-input placeholder="Password" type="password" v-model="ruleForm.password" style="margin-top: 10px;"/>
-            </el-form-item>
+          <div style="margin-top: 15px;">
+            <span class="username">Username or Email</span>
+            <el-input placeholder="Username" v-model="form.username" style="margin-top: 10px;"/>
+          </div>
+          <div style="margin-top: 20px;">
+            <span class="password">Password</span>
+            <el-input placeholder="Password" type="password" v-model="form.password" style="margin-top: 10px;"/>
+          </div>
         </div>
         <div class="loginBtn">
-          <el-button type="primary" :plain="true" @click="login('ruleForm')" style="margin-top: 30px;">Login</el-button>
+          <el-button type="primary" :plain="true" @click="login">Login</el-button>
         </div>
       </div>
-    </el-form>
     </el-card>
   </div>
 </template>
 
 <script>
 import AuthUser from "@/store/AuthUser";
-
 export default {
   data() {
     return {
       accountDataList: [],
-      ruleForm: {
+      form: {
         username: "",
         password: "",
         role: "",
       },
-      rules: {
-        username: [
-          { required: true, message: 'กรุณาใส่username หรือ email', trigger: 'blur' },
-        ],
-        password: [
-          { required: true, message: 'กรุณาใส่รหัสผ่าน', trigger: 'blur' }
-        ]
-      }
     };
   },
   methods: {
@@ -48,37 +46,24 @@ export default {
       //await AccountStore.dispatch("fetch");
      // this.accountDataList = Auth.getters.account;
     },
-    async login(formName) {
+    async login() {
       let payload = {
-        identifier: this.ruleForm.username,
-        password: this.ruleForm.password,
+        identifier: this.form.username,
+        password: this.form.password,
       };
-      
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.checkLogin(payload)
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-
-
-
-    },
-    async checkLogin(payload){
       let res = await AuthUser.dispatch("login", payload)
-        if (res.success) {
-            await this.$message({
-              message: 'เข้าสู่ระบบสำเร็จ',
-              type: 'success'
-            });
-            this.$router.push("/home")
-        } else {
-            this.$message.error('ชื่อผู้เข้าใช้หรือรหัสผ่านไม่ถูกต้อง');   
-        }
-    }
-
+      if (res.success) {
+          await this.$message({
+            message: 'เข้าสู่ระบบสำเร็จ',
+            type: 'success'
+          });
+          this.$router.push("/home")
+      } else {
+          this.$message.error('ชื่อผู้เข้าใช้หรือรหัสผ่านไม่ถูกต้อง');
+          
+          
+      }
+    },
   },
 };
 </script>
@@ -142,15 +127,26 @@ export default {
   font-size: 40px;
 }
 .right-form{
-  margin-left: 40px;
+  margin-left: 30px;
 }
-.login_field{
-    width: 300px;
-    display: inline-block;
-    
-
-
-
+@keyframes shake {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(3em);
+  }
+  40% {
+    transform: translate(-3em);
+  }
+  60% {
+    transform: translate(3em);
+  }
+  80% {
+    transform: translate(-3em);
+  }
+  100% {
+    transform: translate(0);
+  }
 }
-
 </style>

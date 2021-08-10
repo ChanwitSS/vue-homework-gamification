@@ -49,6 +49,10 @@ export default new Vuex.Store({
       async register({ commit }, payload) {
         let res = await Axios.post(apiUrl + '/auth/local/register', payload)
         //commit('register', payload)
+      },
+      async updatePoint({ commit }, user) {
+        let res = await Axios.put(apiUrl + '/users/' + user.id, user, )
+        commit('updatePoint', res)
       }
   },
   modules: {

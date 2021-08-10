@@ -1,6 +1,16 @@
 <template>
-  <div>
-  <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">  </div>
+  <div class='box'>
+    <el-upload
+      class="upload-demo"
+      ref="upload"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :auto-upload="false">
+      <el-button slot="trigger" size="small" type="primary">select file</el-button>
+      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+      <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+    </el-upload>
+    <el-button size="medium" type="success" style="margin-left: 40%; margin-top: 100px;">ส่งงาน</el-button>
+  </div>
 </template>
 
 <script>
@@ -38,12 +48,22 @@ export default {
     }
 
 
-    axios.post(apiUrl+"/attachments", body,config).then(
+    axios.post(apiUrl+"/attachments", body, config).then(
       response => {
         console.log('image upload response > ', response)
       }
     )
-  }
+  },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`ยกเลิกการอัพโหลดไฟล์ ${ file.name }`, 'คำเตือน', {
+        confirmButtonText: 'ตกลง',
+        cancelButtonText: 'ยกลง',
+        type: 'warning'
+      });
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`สามารถอัพโหลดได้ไม่เกิน 3 ไฟล์เท่านั้น`);
+    },
 
   }
 
@@ -53,11 +73,9 @@ export default {
 <style>
 .box {
   width: 380px;
-  height: 300px;
+  height: 200px;
   display: inline-block;
   margin: 10px;
 }
-.upload-demo{
-  margin-left: 20px;
-}
+
 </style>

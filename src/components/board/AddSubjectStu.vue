@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="table_add">
+      <div class="table_add" style="margin-top: 50px">
           <table class="top_form">
               <tr>
                   <td class="add_td">ชื่อ :  </td>
@@ -165,7 +165,7 @@ margin-left: 100px;
 }
 
 .top_form{
-    background-color: rgb(161, 217, 219);
+    background-color: rgb(255, 255, 255);
     padding: 10px;
     padding-left: 10px;
     padding-right: 60px;

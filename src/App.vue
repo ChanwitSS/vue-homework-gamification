@@ -33,7 +33,7 @@ html {
   position: fixed;
   left: 275px;
   top: -1px;
-  width: 1405px;
+  width: 1475px;
   min-height: 735px;
 }
 

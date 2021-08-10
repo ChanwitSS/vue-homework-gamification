@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import Auth from '../services/auth'
 
 Vue.use(Vuex);
 
@@ -27,13 +28,13 @@ export default new Vuex.Store({
   },
   actions: {
     async fetch({ commit }) {
-      let res = await Axios.get(apiUrl + "/subjects");
+      let res = await Axios.get(apiUrl + "/subjects", Auth.getApiHeader);
       commit("fetch",res)
     },
     async find({ commit },id) {
       // console.log("here");
       console.log(apiUrl + '/subjects/'+id);
-      let res = await Axios.get(apiUrl + '/subjects/'+id)
+      let res = await Axios.get(apiUrl + '/subjects/'+ id, Auth.getApiHeader)
       console.log(res)
       commit("find", res)
     },

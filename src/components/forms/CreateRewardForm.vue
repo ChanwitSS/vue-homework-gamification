@@ -85,18 +85,18 @@ export default {
         this.ruleForm.reward_remain !== ""
       ) {
         this.$confirm(
-          "This will permanently Create the file. Continue?",
-          "Warning",
+          "ยืนยันการสร้างรางวัล",
+          "",
           {
-            confirmButtonText: "OK",
-            cancelButtonText: "Cancel",
+            confirmButtonText: "ตกลง",
+            cancelButtonText: "ยกเลิก",
             type: "warning",
           }
         )
           .then(() => {
             this.$notify({
               type: "success",
-              message: "Create completed",
+              message: "สร้างรางวัลสำเร็ข",
             });
           })
           .then(() => {
@@ -106,14 +106,14 @@ export default {
           .catch(() => {
             this.$notify({
               type: "info",
-              message: "Create canceled",
+              message: "ยกเลิกการสร้างรางวัล",
             });
           });
       }
       else{
            this.$notify({
               type: "info",
-              message: "Please complete the form",
+              message: "โปรดกรอกข้อมูล",
             });
       }
     },

@@ -8,14 +8,14 @@
         </div>
         <br>
     </header>
-    <BoardTable/>
+    <boardTable></boardTable>
   </div>
 </template>
 
 <script>
-import BoardTable from "@/components/board/BoardTable.vue";
+import boardTable from "@/components/board/boardTable.vue";
 export default {
-  components: { BoardTable, },
+  components: { boardTable, },
   data() {
     return {
     }

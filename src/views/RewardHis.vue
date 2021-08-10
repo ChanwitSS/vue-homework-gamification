@@ -1,86 +1,117 @@
 <template>
-<div>
-
-    <header class="top-head" style="text-align:center">
-      <br>
-      <div class="cover-top"></div>
-      <div>
-        <label class="headerName">ประวัติการแลกรางวัล</label> 
-      </div>
-    <br>
-    </header>
-
-
-    <el-button class="btn" slot="reference" type="primary" icon="el-icon-present" @click="changeRounter('rewards/redeem')" round>แลกรางวัล</el-button>
-    <div>
+  <div class="board">
       
-    </div>
+    <el-radio-group v-model="radio" >
+      <el-radio-button label="use">ประวัติการใช้แต้ม</el-radio-button>
+      <el-radio-button label="exchange">ประวัติการแลก</el-radio-button>
+    </el-radio-group>
 
-    <div>
-        <el-row >
-            <el-col :span="6" v-for="reward in rewards" v-bind:key="reward">
-                <RewardHistory :reward="reward" :who="who"/>
-            </el-col>
-        </el-row>
-    </div>
-</div>
+    <el-table
+      class="center"
+      :data="
+        tableDataA.filter(
+          (data) =>
+            !search ||
+            data.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.id === parseInt(search) || data.total_point === parseInt(search)
+        )
+      "
+      :default-sort="{ prop: 'total_point', order: 'descending' }"
+      v-if="radio == 'exchange'"
+      style="width:75%"
+    >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>User ID: {{ props.row.user_ID }}</p>
+          <p>Email: {{ props.row.email }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column type="index"> </el-table-column>
+      <el-table-column label="ชื่อของรางวัล" sortable prop="reward.reward_name">
+      </el-table-column>
+      <el-table-column label="ประวัติการแลกรางวัล" sortable prop="point">
+      </el-table-column>
+    </el-table>
 
-  
+    <el-table
+      class="center"
+      :data="
+        tableDataB.filter(
+          (data) =>
+            !search ||
+            data.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            data.id === parseInt(search) || data.total_point === parseInt(search)
+        )
+      "
+      :default-sort="{ prop: 'total_point', order: 'descending' }"
+      v-if="radio == 'use'"
+      style="width:75%"
+
+    >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <p>User ID: {{ props.row.user_ID }}</p>
+          <p>Email: {{ props.row.email }}</p>
+        </template>
+      </el-table-column>
+      <el-table-column type="index"> </el-table-column>
+      <el-table-column label="วันที่" sortable prop="created_at">
+      </el-table-column>
+      <el-table-column label="คะแนน" sortable prop="point">
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
+import UserStore from "@/store/UserStore";
+import Axios from "axios"
+import moment from 'moment'
+import Auth from '../services/auth'
 
-import RewardStore from "../store/RewardStore"
-import RewardHistory from "../components/cards/RewardHistory.vue"
-import AuthUser from "../store/AuthUser"
 export default {
-    components: {RewardHistory},
-  data(){
-    return{
-      rewards:[],
-      check:1,
-      who:[]
-    }
-  },  
+  data() {
+    return {
+      search: "",
+      tableDataA: [],
+      tableDataB: [],
+      range: null,
+      radio: 'use',
+    };
+  },
   created() {
-        this.fetch()
+    this.fetch();
+  },
+  methods: {
+    async fetch() {
+      await UserStore.dispatch("fetch");
+      this.filter()
     },
-    methods:{
-        async fetch() {
-          this.who = AuthUser.getters.user
+    async filter() {
+      let apiUrl = process.env.VUE_APP_API_HOST
+      let id = JSON.parse(localStorage.getItem('auth_key')).user.id
+      let student_reward_res = await Axios.get(apiUrl + `/student-rewards?users_permissions_user=${id}`, Auth.getApiHeader)
+      let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user=${id}`, Auth.getApiHeader)
 
-          await RewardStore.dispatch("fetch")
-          this.rewards = RewardStore.getters.rewards
-          let arr = []
-
-
-          for (let index = 0; index < this.who.rewards.length; index++) {
-            await RewardStore.dispatch("find",this.who.rewards[index].id)
-            let keep = RewardStore.getters.rewards
-            arr.push(keep)
-          }          
-        },
-        changeRounter(route) {
-          this.$router.push(`/${route}`)
-        }
+      this.tableDataA = student_reward_res.data
+      this.tableDataB = student_homework_res.data
+      console.log(this.tableDataB)
     }
-}
-
+  },
+};
 </script>
-
-<style scoped lang="scss">
-.btn{
-
-    position: absolute;
-    right: 6%;
-    top: 9%;
-
-}
-.headerName{
-  font-size: 5.5em;
-  font-family: TAGonNon;
-  text-shadow: 1px 0.5px;
-
+<style>
+.center {
+  position: fixed; /* or absolute */
+  top: 20px;
+  left: 10px;
 }
 
+.board{
+  margin-top: 30px;
+  margin-left: 150px;
+  width: 100%;
+}
 </style>

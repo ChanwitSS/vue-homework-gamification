@@ -1,7 +1,7 @@
 <template>
   <div @editItem="getClickedItem" class="edit_reward">
     <el-form
-      :inline="true" :model="formInline" class="demo-form-inline"
+      :inline="true" class="demo-form-inline"
       @editItem="getClickedItem"
       style="width:100%;"
     >
@@ -95,18 +95,18 @@ export default {
             reward_point: this.clickedItem.reward_point,
           };
           this.$confirm(
-            "This will permanently Change the file. Continue?",
-            "Warning",
+            "ยืนยันการลบรางวัล",
+            "",
             {
-              confirmButtonText: "OK",
-              cancelButtonText: "Cancel",
+              confirmButtonText: "ตกลง",
+              cancelButtonText: "ยกเลิก",
               type: "warning",
             }
           )
             .then(() => {
               this.$notify({
                 type: "success",
-                message: "Change completed",
+                message: "แก้ไขรางวัลสำเร็จ",
               });
             })
             .then(async () => {
@@ -117,19 +117,19 @@ export default {
             .catch(() => {
               this.$notify.info({
                 type: "info",
-                message: "Change canceled",
+                message: "ยกเลิกการแก้ไขรางวัล",
               });
             });
         } else {
           this.$notify.info({
             title: "Info",
-            message: "You did not change some thing",
+            message: "โปรดกรอกข้อมูลที่ต้องการเปลี่ยน",
           });
         }
       } else {
         this.$notify.info({
           title: "Info",
-          message: "Please select row to edit",
+          message: "โปรดเลือกข้อมูลที่ต้องการเปลี่ยน",
         });
       }
     },
@@ -147,7 +147,7 @@ export default {
   margin-top: 20px;
   margin-left: 60px;
   width: 92%;
-  background-color: rgb(188, 226, 233);
+  background-color: rgb(255, 255, 255);
 }
 .manage{
   padding-left: 40px;
