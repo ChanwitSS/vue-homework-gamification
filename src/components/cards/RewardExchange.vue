@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div> 
         <el-card :body-style="{ padding: '0'}" style="margin: 15px" class="rcard"> 
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <img :src="api+reward.image.url" class="image">
           <div style="padding: 14px;text-align:center">
               <label>{{reward.reward_name}}</label>
               <div class="bottom clearfix" v-if="check==1">
@@ -22,7 +22,8 @@ import UserStore from "../../store/UserStore"
 export default {
   data(){
     return{
-      check:1
+      check:1,
+      api: process.env.VUE_APP_API_HOST || "http://localhost:1337"
     }
   },  
   props:{
@@ -31,9 +32,9 @@ export default {
   },
     methods:{
       async checkPoint(reward){
-        if (this.who.left_point >= reward.reward_point) {
+        if (this.who.left_point >= reward.reward_point && reward.reward_remain !== 0) {
           this.changeCheck()
-        } else if(reward.reward_remain === 0){
+        } else if(reward.reward_remain == 0){
           this.$message.error('ขออภัย ของรางวัลหมดแล้ว');
         }else if (this.who.left_point < reward.reward_point) {
           // this.$message.error('คะแนนของคุณไม่เพียงพอ โปดเลือกใหม่อีกคร้ง');
@@ -69,6 +70,7 @@ export default {
           // } else {
           //   RewardStore.dispatch("edit",payload)
           // }
+          console.log(payload);
           RewardStore.dispatch("edit", payload)
           RewardStore.dispatch("addRecord", { userPayload: this.who, rewardPayload: payload })
 

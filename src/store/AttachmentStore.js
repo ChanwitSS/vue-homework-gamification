@@ -28,7 +28,7 @@ export default new Vuex.Store({
   },
   actions: {
     async fetch({ commit }) {
-      let res = await Axios.get(apiUrl + "/attachements", Auth.getApiHeader);
+      let res = await Axios.get(apiUrl + "/attachments", Auth.getApiHeader);
       commit("fetch",res)
     },
     async add({commit}, { homework, user, attachments }){
@@ -36,6 +36,9 @@ export default new Vuex.Store({
         point: homework.id,
         user: user.id
       }
+      let attachment_res = await Axios.post(apiUrl + '/attachments', attachment_body, Auth.getApiHeader)
+      commit("add", attachment_res)
+
       let attachment_res = await Axios.post(apiUrl + '/attachements', attachment_body, Auth.getApiHeader)
       commit("add", attachment_res)
 
@@ -46,9 +49,8 @@ export default new Vuex.Store({
           ref: 'attachment',
           field: 'attachment_file'
         }
-        let file_res = await Axios.post(apiUrl + '/attachements', file_body, Auth.getApiHeader)
+        let file_res = await Axios.post(apiUrl + '/upload', file_body, Auth.getApiHeader)
       }
-      console.log(file_res)
     }
   },
   modules: {},

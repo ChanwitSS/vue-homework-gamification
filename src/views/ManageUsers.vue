@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div
+      <div class="cover-top"></div>
+      <div>
+      <label class="headerName">จัดการผู้ใช้งาน</label>
+      </div>
+      <br>
+      </header>
     <user-table></user-table>
     <Form></Form>
   </div>

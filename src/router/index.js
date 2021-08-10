@@ -12,9 +12,6 @@ import RewardHistory from "../views/RewardHis";
 import RedeemRewards from "../views/RedeemRewards.vue";
 import CreateRewards from "../views/CreateReward.vue"
 import RegisterSubject from "../views/RegisterSubject.vue"
-
-
-
 import CreateRewards from "../views/CreateReward.vue";
 
 Vue.use(VueRouter);

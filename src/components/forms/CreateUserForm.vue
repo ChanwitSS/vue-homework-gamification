@@ -1,4 +1,6 @@
 <template>
+  <div align="center" style="margin-top: 100px;">
+    <!-- <el-button
   <div>
     <el-button
       type="success"
@@ -6,7 +8,7 @@
       :model="form"
       @click="onClickSave('form')"
       >บันทึก</el-button
-    >
+    > -->
     <el-form label-width="100px">
       <el-form-item label="ชื่อ">
         <el-input
@@ -30,7 +32,7 @@
       <el-form-item label="User ID">
         <el-input v-model.number="form.user_ID"></el-input>
       </el-form-item>
-      <el-form-item label="บทบาท">
+      <el-form-item label="บทบาท" style="margin-right:10px">
         <el-select v-model="form.role" placeholder="บทบาท">
           <el-option
             v-for="item in roles"
@@ -41,9 +43,10 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <br><br>
-    <el-button type="success" style="margin-left:540px; right:20;" @click="onClickSave('ruleForm')">บันทึก</el-button>
-    </div>
+    <br /><br />
+    <el-button type="success" style=";" @click="onClickSave('ruleForm')"
+      >บันทึก</el-button
+    >
   </div>
 </template>
 <script>
@@ -168,6 +171,21 @@ export default {
       };
     },
     async onClickSave(formName) {
+      let payload = {
+        username: this.form.username,
+        password: this.form.password,
+        first_name: this.form.first_name,
+        last_name: this.form.last_name,
+        email: this.form.email,
+        user_ID: this.form.user_ID,
+        role: this.form.role,
+      };
+      if (this.form.role === "Student") {
+        payload.role = 5;
+      } else if (this.form.role === "Teacher") {
+        payload.role = 4;
+      }
+      console.log(payload);
       if (this.checkAllState) {
         if (this.checkEmail) {
           this.$message(statefunction.statusMessage("info", "email ซ้ำ"));
@@ -192,7 +210,7 @@ export default {
               });
             })
             .then(async () => {
-              await UserStore.dispatch("addUser", this.form);
+              await UserStore.dispatch("addUser", payload);
               this.clearForm();
             })
             .catch(() => {
@@ -238,4 +256,3 @@ export default {
 };
 </script>
 
-<style></style>

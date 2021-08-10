@@ -55,8 +55,7 @@ export default {
         return {
             user: User.getters.user,
             userRole: User.getters.user.role.name,
-            homeworks: [],
-            filterHomeworks: []
+            filterHomeworks: null
         }
     },
     created() {
@@ -64,9 +63,9 @@ export default {
     },
     methods: {
         async fetch() {
-            await HomeworkStore.dispatch("fetch")
-            this.homeworks = HomeworkStore.getters.homeworks
-            this.filter()
+            await HomeworkStore.dispatch("filterHomeworks", this.user)
+            this.filterHomeworks = await HomeworkStore.getters.homeworks
+            console.log('S', this.filterHomeworks)
         },
         async filter() {
             let apiUrl = process.env.VUE_APP_API_HOST
@@ -109,12 +108,9 @@ export default {
 .top-head{
     /* background-color: rgb(183, 199, 233); */
     background-image: url(../assets/stationary_fade3.jpg);  
+    width: "1000%";
 
     /* background: rgba(5, 103, 195, 0.411) */
 }
-
-
-
-
 </style>
 

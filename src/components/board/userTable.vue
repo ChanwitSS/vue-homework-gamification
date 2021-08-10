@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      class="center"
       :data="
         tableData.filter(
           (data) =>
@@ -110,10 +111,12 @@ export default {
           this.$notify({
             type: "success",
             message: "Delete completed",
-          });
-          await UserStore.dispatch("delete", row);
-          this.fetch();
+          }
           // location.reload();
+        })
+        .then(async () => {
+          await UserStore.dispatch("delete", row);
+          this.fetch(
         })
         // .then(async () => {
         //   await this.fetch();
@@ -124,9 +127,19 @@ export default {
             message: "Delete canceled",
           });
         });
-    },
+    }
+    // async success(row) {
+    //   await UserStore.dispatch("delete", row);
+    //   this.fetch();
+    // }
   },
 };
 </script>
 
-<style></style>
+<style>
+.center {
+  position: fixed; /* or absolute */
+  top: 20px;
+  left: 10px;
+}
+</style>

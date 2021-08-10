@@ -22,7 +22,6 @@ export default new Vuex.Store({
       state.data.push(res.data)
     },
     find(state, res) {
-      console.log(res)
       state.data = res.data
     },
   },
@@ -58,12 +57,12 @@ export default new Vuex.Store({
         }
         let res = await Axios.post(apiUrl + `/student-homeworks`, student_homework_body, Auth.getApiHeader)
       }
-  },
-  async find({ commit },id) {
-    let res = await Axios.get(apiUrl + '/homeworks/'+ id, Auth.getApiHeader)
-    console.log(res)
-    commit("find", res)
-  },
+  }
+    async find({ commit },id) {
+      let res = await Axios.get(apiUrl + '/homeworks/'+ id, Auth.getApiHeader)
+      console.log(res)
+      commit("find", res)
+    },
     async edit({ commit }, payload) {
       let body = {
           id: payload.id,
@@ -74,6 +73,14 @@ export default new Vuex.Store({
       }
       let res = await Axios.put(apiUrl + '/homeworks/' + payload.id, body, Auth.getApiHeader)
       commit("edit", payload.index, res.data )
+    },
+    async filterHomeworks({commit}, user) {
+      let res = await Axios.get(
+        apiUrl + `/student-homeworks?users_permissions_user.role=5&users_permissions_user=${user.id}&is_sent=0`,
+        Auth.getApiHeader
+      )
+      console.log(res)
+      commit('fetch', res)
     }
   },
   modules: {
