@@ -57,7 +57,7 @@ export default new Vuex.Store({
         }
         let res = await Axios.post(apiUrl + `/student-homeworks`, student_homework_body, Auth.getApiHeader)
       }
-  },
+  }
     async find({ commit },id) {
       let res = await Axios.get(apiUrl + '/homeworks/'+ id, Auth.getApiHeader)
       console.log(res)

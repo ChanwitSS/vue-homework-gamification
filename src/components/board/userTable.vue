@@ -111,12 +111,12 @@ export default {
           this.$notify({
             type: "success",
             message: "Delete completed",
-          });
+          }
           // location.reload();
         })
         .then(async () => {
           await UserStore.dispatch("delete", row);
-          this.fetch();
+          this.fetch(
         })
         // .then(async () => {
         //   await this.fetch();
@@ -127,11 +127,11 @@ export default {
             message: "Delete canceled",
           });
         });
-    },
+    }
     // async success(row) {
     //   await UserStore.dispatch("delete", row);
     //   this.fetch();
-    // },
+    // }
   },
 };
 </script>

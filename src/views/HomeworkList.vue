@@ -67,6 +67,22 @@ export default {
             this.filterHomeworks = await HomeworkStore.getters.homeworks
             console.log('S', this.filterHomeworks)
         },
+        async filter() {
+            let apiUrl = process.env.VUE_APP_API_HOST
+            let res
+            if (this.userRole == 'Student') {
+                res = await Axios.get(
+                    apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_sent=0`,
+                    Auth.getApiHeader
+                )
+            } else if (this.userRole == 'Teacher') {
+                res = await Axios.get(apiUrl + `/student-homeworks?users_permissions_user.role=${this.user.role.id}&users_permissions_user=${this.user.id}&is_check=0`,
+                    Auth.getApiHeader
+                )
+            }
+            console.log(res)
+            this.filterHomeworks = res.data
+        }
     }
 }
 </script>

@@ -69,8 +69,8 @@ export default {
       this.$message.warning(`สามารถเอกสารได้ไม่เกิน 3 ไฟล์เท่านั้น`);
     },
     async sendHomework() {
-      console.log(this.attachments)
-      if (this.attachments.length == 0) {
+      console.log(this.attachments
+      if (this.attachments.length == 0) 
         this.$message.warning(`โปรดแนบเอกสาร`);
       } else {
         this.$confirm('ยืนยันการส่งงาน', '', {
@@ -82,9 +82,8 @@ export default {
             type: 'success',
             message: 'ส่งงานสำเร็จ'
           })
-        }).then(
-          this.success()
-        ).catch(() => {
+        }).then(async () => {
+          let res = await Attachment.dรspatch("add", { homework: this.homework.homework, user: this.user, attachments: this.attachments })
           this.$message({
             type: 'info',
             message: 'ยกเลิกการส่งงาน'

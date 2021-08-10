@@ -39,7 +39,10 @@ export default new Vuex.Store({
       let attachment_res = await Axios.post(apiUrl + '/attachments', attachment_body, Auth.getApiHeader)
       commit("add", attachment_res)
 
-      /*for (let i=0; i<attachments.length; i++) {
+      let attachment_res = await Axios.post(apiUrl + '/attachements', attachment_body, Auth.getApiHeader)
+      commit("add", attachment_res)
+
+      for (let i=0; i<attachments.length; i++) {
         let file_body = {
           files: attachments[i].raw,
           refId: attachment_res.data.id,
@@ -47,7 +50,7 @@ export default new Vuex.Store({
           field: 'attachment_file'
         }
         let file_res = await Axios.post(apiUrl + '/upload', file_body, Auth.getApiHeader)
-      }*/
+      }
     }
   },
   modules: {},

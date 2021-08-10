@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <header class="top-head" style="text-align:center">
-      <br>
+  <div
       <div class="cover-top"></div>
       <div>
       <label class="headerName">จัดการผู้ใช้งาน</label>

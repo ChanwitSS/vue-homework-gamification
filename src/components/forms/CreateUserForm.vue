@@ -1,6 +1,8 @@
 <template>
   <div align="center" style="margin-top: 100px;">
     <!-- <el-button
+  <div>
+    <el-button
       type="success"
       style="margin:20px 20px 50px 1100px; right:20;"
       :model="form"
@@ -254,4 +256,3 @@ export default {
 };
 </script>
 
-<style></style>
