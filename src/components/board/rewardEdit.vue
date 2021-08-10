@@ -147,7 +147,7 @@ export default {
   margin-top: 20px;
   margin-left: 60px;
   width: 92%;
-  background-color: rgb(188, 226, 233);
+  background-color: rgb(255, 255, 255);
 }
 .manage{
   padding-left: 40px;

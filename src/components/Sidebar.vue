@@ -2,8 +2,8 @@
     <div class="bar">
         <div class="header_top">
             <!-- <h1 class="title">Homework</h1> -->
-            <h1 style="font-size:16pt;color:white"><b>{{user.first_name}} {{user.last_name}}</b></h1>
-            <h1 style="font-size:13pt;color:white" v-if="userRole == 'Student'">คะแนนคงเหลือ : {{user.left_point}}</h1>
+            <h1 style="font-size:16pt;color:black;"><b>{{user.first_name}} {{user.last_name}}</b></h1>
+            <h1 style="font-size:13pt;color:black" v-if="userRole == 'Student'">คะแนนคงเหลือ : {{user.left_point}}</h1>
         </div>
         
         <el-menu class="el-menu-vertical-demo" :popper-append-to-body="false">
@@ -16,7 +16,7 @@
                 <span slot="title">คะแนน - แลกรางวัล</span>
             </el-menu-item>
 
-            <el-menu-item index="3" @click="changeRounter('homeworks')" v-if="userRole == 'Teacher'" :disabled="isDisabled">
+            <el-menu-item index="3" @click="changeRounter('homeworks')" v-if="userRole == 'Teacher'" :disabled="true">
                 <i class="el-icon-document-copy" style="color:black"></i>
                 <span slot="title">ตรวจการบ้าน</span>
             </el-menu-item>
@@ -42,27 +42,14 @@
                 <i class="el-icon-setting" style="color:black"></i>
                 <span slot="title">เพิ่มผู้ใช้งาน</span>
             </el-menu-item>
-            <el-menu-item index="8" @click="changeRounter('RegisterSubject')" v-if="userRole == 'Admin'" :disabled="isDisabled">
+            <el-menu-item index="9" @click="changeRounter('RegisterSubject')" v-if="userRole == 'Admin'" :disabled="isDisabled">
                 <i class="el-icon-circle-plus-outline" style="color:black"></i>
                 <span slot="title">เพิ่มวิชาให้นักเรียน</span>
             </el-menu-item>
-            
-            <el-submenu index="9">
-                <template slot="title">
-                    <i class="el-icon-user" style="color:black"></i>
-                    <span slot="title">บัญชี</span>
-                </template>
-                <el-menu-item-group class="account_drop">
-                    <el-menu-item index="9-1" @click="changeRounter('info')">
-                        <i class="el-icon-document-copy" style="color:black"></i>
-                        <span slot="title">ข้อมูล</span>
-                    </el-menu-item>
-                    <el-menu-item index="9-2" @click="logout">
-                        <i class="el-icon-switch-button" style="color:black"></i>
-                        <span slot="title">ออกจากระบบ</span>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
+            <el-menu-item index="10" @click="logout">
+                <i class="el-icon-switch-button" style="color:black"></i>
+                <span slot="title">ออกจากระบบ</span>
+            </el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -107,7 +94,7 @@ export default {
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     margin-top: 0px;
-    background-color: rgb(166, 204, 204);
+    background-color: #ffffff;
 }
 
 .icon {
@@ -127,7 +114,7 @@ export default {
     bottom: 0;
     top: 0;
     left: 0;
-    background: rgb(117, 152, 168);
+    background: #ffffff;
     width: 275px;
     height: 100%;
 }
@@ -136,14 +123,14 @@ export default {
   top: 15px;
   left: 30px;
   font-size: 30px;
-  border-color: white;
+  border-color: 1px 1px black;
+
 }
 
 .header_top {
     margin-top: 10%;
     margin-left: 10%;
     margin-bottom: 10%;
-    text-shadow: 1px 1px black;
 }
 
 .account_drop{

@@ -27,6 +27,9 @@
             </template>
           </v-date-picker>
         </el-form-item>
+        <el-form-item label="คะแนน"> 
+          <el-input-number v-model="ruleForm.point" :min="1" :max="99"></el-input-number>
+        </el-form-item>
       </el-form>
       <br><br>
       <div class="addButton" >
@@ -65,14 +68,15 @@ export default {
             due_date: [
               {type: 'date',required: true, message: 'กรุณากำหนดส่ง', trigger: 'change'  }
             ],
-
+            point: [
+              {required: true, message: 'กรุณาใส่คะแนน', trigger: 'blur' }
+            ],
           },
         }
     },
     props: {
     homework: null
   },
-    
   created() {
     this.fetchSubject()
   },

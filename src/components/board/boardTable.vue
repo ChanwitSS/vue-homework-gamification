@@ -103,6 +103,7 @@ export default {
   methods: {
     async fetch() {
       await UserStore.dispatch("fetch");
+      console.log(UserStore.getters.users)
       UserStore.getters.users.map((item, index) => {if (item.role.name == "Student") { this.tableData.push(item)}});
     },
     onClickSelectRange() {
@@ -111,8 +112,8 @@ export default {
     async dateFilter() {
       try {
         let apiUrl = process.env.VUE_APP_API_HOST
-        let start = moment(this.range.start)/*.subtract(7, 'hours')*/.format('YYYY-MM-DD')
-        let end = moment(this.range.end)/*.subtract(7, 'hours')*/.format('YYYY-MM-DD')
+        let start = moment(this.range.start).subtract(7, 'hours').format('YYYY-MM-DD')
+        let end = moment(this.range.end).subtract(7, 'hours').format('YYYY-MM-DD')
         let student_homework_res = await Axios.get(apiUrl + `/student-homeworks?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
         let student_reward_res = await Axios.get(apiUrl + `/student-rewards?created_at_gte=${start}&created_at_lte=${end}`, Auth.getApiHeader)
         for (let i=0; i<this.tableData.length; i++) {

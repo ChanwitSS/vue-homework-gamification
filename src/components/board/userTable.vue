@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      class="center"
       :data="
         tableData.filter(
           (data) =>
@@ -111,10 +112,11 @@ export default {
             type: "success",
             message: "Delete completed",
           });
-          await UserStore.dispatch("delete", row);
-          this.fetch();
+
           // location.reload();
-        })
+        }).then( 
+          this.success()
+        )
         // .then(async () => {
         //   await this.fetch();
         // })
@@ -125,8 +127,18 @@ export default {
           });
         });
     },
+    async success() {
+      await UserStore.dispatch("delete", row);
+      this.fetch();
+    }
   },
 };
 </script>
 
-<style></style>
+<style>
+.center {
+  position: fixed; /* or absolute */
+  top: 20px;
+  left: 10px;
+}
+</style>

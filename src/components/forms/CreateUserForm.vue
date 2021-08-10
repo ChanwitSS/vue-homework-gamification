@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <el-button
+  <div align="center" style="margin-top: 100px;">
+    <!-- <el-button
       type="success"
       style="margin:20px 20px 50px 1100px; right:20;"
       :model="form"
       @click="onClickSave('form')"
       >บันทึก</el-button
-    >
+    > -->
     <el-form label-width="100px">
       <el-form-item label="ชื่อ">
         <el-input
@@ -30,7 +30,7 @@
       <el-form-item label="User ID">
         <el-input v-model.number="form.user_ID"></el-input>
       </el-form-item>
-      <el-form-item label="บทบาท">
+      <el-form-item label="บทบาท" style="margin-right:10px">
         <el-select v-model="form.role" placeholder="บทบาท">
           <el-option
             v-for="item in roles"
@@ -42,8 +42,7 @@
       </el-form-item>
     </el-form>
     <br><br>
-    <el-button type="success" style="margin-left:540px; right:20;" @click="onClickSave('ruleForm')">บันทึก</el-button>
-    </div>
+    <el-button type="success" style=";" @click="onClickSave('ruleForm')">บันทึก</el-button>
   </div>
 </template>
 <script>
